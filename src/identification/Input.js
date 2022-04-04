@@ -1,4 +1,3 @@
-import { createRef, useRef } from "react";
 import React from "react";
 class Input extends React.Component{
     
@@ -41,14 +40,14 @@ class Input extends React.Component{
     validate(event) {
         const inputs = Array.prototype.slice.call(document.getElementsByTagName('input'));
         var cValue = this.input.current.value;
-        if (this.id == 'pass') {
+        if (this.id === 'pass') {
             this.cPassRef.current.setRegex('^' + cValue + '$');
-            if (document.getElementById('cpass').value == '') {
+            if (document.getElementById('cpass').value === '') {
                 this.cPassRef.current.setValidity("");
                 this.cPassRef.current.setError("");
                 this.cSetter(null);
             }
-            else if (document.getElementById('cpass').value == cValue) {
+            else if (document.getElementById('cpass').value === cValue) {
                 this.cPassRef.current.setValidity("is-valid");
                 this.cPassRef.current.setError("");
                 this.cSetter(cValue);
@@ -59,8 +58,8 @@ class Input extends React.Component{
                 this.cSetter(null);
             }
         }
-        if (this.id == 'cpass') {
-            if (document.getElementById('cpass').value == '') {
+        if (this.id === 'cpass') {
+            if (document.getElementById('cpass').value === '') {
                 this.setState({
                     error : '',
                     inputClass : ''
@@ -73,7 +72,7 @@ class Input extends React.Component{
             this.state.inputClass = "is-valid";
             this.state.error = "";
             this.inputSetter(cValue);
-            if (event.keyCode == 13) {
+            if (event.keyCode === 13) {
                 inputs[(inputs.indexOf(event.target) + 1) % inputs.length].focus();
             }
             return;

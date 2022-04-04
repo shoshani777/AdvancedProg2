@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Input from './Input';
 import React from "react";
 
@@ -63,7 +62,6 @@ class Register extends React.Component {
           {nNameElement}
           {passElement}
           {cPassElement}
-
           <div className="mb-3">
           <label htmlFor="profilePic" className="form-label">Add profile picture!</label>
           <input className="form-control" type="file" id="profilePic" accept="image/*" />
@@ -75,4 +73,4 @@ class Register extends React.Component {
     );
   }
 }
-  export default Register;
+export default Register;

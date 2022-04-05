@@ -20,7 +20,7 @@ function App() {
   var linkTo = in_Registration? '/sign_in' : '/register';
   var linkFrom = in_Registration? '/register':'/sign_in' ;
   var strLinkTo = in_Registration? 'registeration' : 'sign in' ;
-  var movingTo = in_Registration?<Sign></Sign>:<Regist></Regist>;
+  var movingTo = in_Registration?<Login></Login>:<Register></Register>;
   return (
     <>
     <BrowserRouter>

@@ -1,15 +1,11 @@
 //import Register from './register/Register';
 import {
   BrowserRouter,
-  Switch,
   Route,
   Link,
-  useRouteMatch,
   Routes
 } from "react-router-dom";
 import { useState } from 'react';
-import Regist from './Regist';
-import Sign from './Sign';
 import Register from './identification/Register';
 import Login from './identification/Login';
 
@@ -25,14 +21,9 @@ function App() {
     <>
     <BrowserRouter>
     <Routes>
-      {/* <Route path='/register' element={<Regist />}></Route>
-      <Route path='/sign_in' element={<Sign />}></Route> */}
       <Route path={linkFrom} element={movingTo}></Route>
-
     </Routes>
-    {/* <Link to='/register'>to register</Link><br></br>
-    <Link to='/sign_in'>to sign in</Link> */}
-    <Link to={linkTo} onClick={()=>setIn_Registration(!in_Registration)} >to {strLinkTo} </Link>
+      <Link to={linkTo} onClick={()=>setIn_Registration(!in_Registration)} >to {strLinkTo} </Link>
     </BrowserRouter>
     </>
   );

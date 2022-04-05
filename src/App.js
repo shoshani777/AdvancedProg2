@@ -10,6 +10,9 @@ import {
 import { useState } from 'react';
 import Regist from './Regist';
 import Sign from './Sign';
+import Register from './identification/Register';
+import Login from './identification/Login';
+
 
 function App() {
   var is_in_Registration = window. location. href.endsWith("/register");

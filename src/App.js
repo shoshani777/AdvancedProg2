@@ -10,6 +10,7 @@ import Register from './identification/Register';
 import Login from './identification/Login';
 import WebPage from "./WebPage";
 import nameToLink from "./nameToLink";
+import BackGround from "./BackGround";
 
 class App extends React.Component {
 
@@ -60,7 +61,7 @@ class App extends React.Component {
         {/* take the next line of when submitting */}
         <br></br><Link to='/webPage' onClick={()=>{this.setPage(nameToLink.get('webPage'))}} >go to web page</Link>
       </BrowserRouter>
-      
+      <BackGround css={this.state.page.bg}/>
       </>
     );
   }

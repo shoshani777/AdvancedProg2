@@ -5,44 +5,67 @@ import {
   Link,
   Routes
 } from "react-router-dom";
-import { useState } from 'react';
+import React from "react";
 import Register from './identification/Register';
 import Login from './identification/Login';
 import WebPage from "./WebPage";
+import nameToLink from "./nameToLink";
 
+class App extends React.Component {
 
-const map = {'':{name:'logIn',linkTo:'register',strLinkTo:"Haven't registered?"},
-'logIn':{name:'logIn',linkTo:'register',strLinkTo:"Haven't registered?"},
-'register':{name:'register',linkTo:'logIn',strLinkTo:"I already have an account"},
-'webPage':{name:'webPage',linkTo:'logIn',strLinkTo:"Exit"}}
-
-function App() {
-  var defualt_url = ''
-  //assigning values
-  if(window. location. href.match(/^http:\/\/localhost:\d+\/logIn$/)!=null){defualt_url = 'logIn' }
-  if(window. location. href.match(/^http:\/\/localhost:\d+\/register$/)!=null){defualt_url = 'register' }
-  if(window. location. href.match(/^http:\/\/localhost:\d+\/webPage$/)!=null){defualt_url = 'webPage' }
-  const [page, setPage] = useState(map[defualt_url]);
-  if(defualt_url == '')
-  {
-    window. location. href = "/logIn"
+  constructor() {
+    super();
+    this.state = {
+      user : 0, page : nameToLink.get('')
+    };
+    this.setUser = this.setUser.bind(this);
+    this.setPage = this.setPage.bind(this);
+    this.defualt_url = '';
+    if(window. location. href.match(/^http:\/\/localhost:\d+\/logIn$/)!=null){this.defualt_url = 'logIn' }
+    if(window. location. href.match(/^http:\/\/localhost:\d+\/register$/)!=null){this.defualt_url = 'register' }
+    if(window. location. href.match(/^http:\/\/localhost:\d+\/webPage$/)!=null){this.defualt_url = 'webPage' }
+    if(this.defualt_url == '')
+    {
+      window. location. href = "/logIn"
+    }
   }
-  var linkTo = '/'+page.linkTo;
-  return (
-    <>
-    <BrowserRouter>
-    <Routes>
-      <Route path='' element={<Login></Login>}></Route>
-      <Route path='/register' element={<Register></Register>}></Route>
-      <Route path='/logIn' element={<Login></Login>}></Route>
-      <Route path='/webPage' element={<WebPage />}></Route>
-    </Routes>
-      <Link to={linkTo} onClick={()=>{setPage(map[page.linkTo])}} >{page.strLinkTo} </Link>
-      {/* take the next line of when submitting */}
-      <br></br><Link to='/webPage' onClick={()=>{setPage(map['webPage'])}} >go to web page</Link>
-    </BrowserRouter>
-    </>
-  );
+  
+  setUser(value) {
+    this.setState({
+      user: value
+    })
+  }
+  setPage(value) {
+    this.setState({
+      page: value
+    })
+  }
+
+  render() {
+    //assigning values
+    const LoginElement = <Login setPage={this.setPage} setUser={this.setUser} />;
+    const RegisterElement = <Register setPage={this.setPage} setUser={this.setUser} />;
+    const WebPageElement = <WebPage userName={this.state.user}/>;
+    var linkTo = '/'+this.state.page.linkTo;
+    return (
+      <>
+      <BrowserRouter>
+      <Routes>
+        <Route path='' element={LoginElement}></Route>
+        <Route path='/register' element={RegisterElement}></Route>
+        <Route path='/logIn' element={LoginElement}></Route>
+        <Route path='/webPage' element={WebPageElement}></Route>
+      </Routes>
+        <Link to={linkTo} onClick={()=>{this.setPage(nameToLink.get(this.state.page.linkTo))}} >{this.state.page.strLinkTo} </Link>
+        {/* take the next line of when submitting */}
+        <br></br><Link to='/webPage' onClick={()=>{this.setPage(nameToLink.get('webPage'))}} >go to web page</Link>
+      </BrowserRouter>
+      
+      </>
+    );
+  }
+  
 }
+
 
 export default App;

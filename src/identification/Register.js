@@ -1,11 +1,16 @@
 import Input from './Input';
 import React from "react";
+import {
+  Link,
+} from "react-router-dom";
+import users from './users';
+import nameToLink from '../nameToLink';
 
 
 class Register extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       userName : 0, nickName : 0, password : 0, confirmPass : 0
     };
@@ -14,10 +19,24 @@ class Register extends React.Component {
     this.setNickName = this.setNickName.bind(this);
     this.setPassword = this.setPassword.bind(this);
     this.setConfirmPass = this.setConfirmPass.bind(this);
-    
+    this.register = this.register.bind(this);  
+    this.setPage = props.setPage;
+    this.setUser = props.setUser;
   }
 
-  
+  register() {
+    if (!(this.state.userName && this.state.nickName && this.state.password &&
+      this.state.confirmPass))
+      return;
+    const uName = this.state.userName;
+    if (!users.has(uName)) {
+      this.setUser(this.state);
+      this.setPage(nameToLink.get('webPage'));
+    }
+    else {
+      console.log('user name already exist');
+    }
+  }
 
   setUserName(value) {
     this.setState({
@@ -66,8 +85,10 @@ class Register extends React.Component {
           <label htmlFor="profilePic" className="form-label">Add profile picture!</label>
           <input className="form-control" type="file" id="profilePic" accept="image/*" />
           </div>
-          
-          <button type="submit" className="btn btn-primary" disabled={!(this.state.userName && this.state.nickName && this.state.password && this.state.confirmPass)}>Register</button>
+
+          <Link to={(this.state.userName && this.state.nickName && this.state.password &&
+           this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : '#'} 
+            className="btn btn-primary" onClick={this.register} >register</Link>
         </form>
       </div>
     );

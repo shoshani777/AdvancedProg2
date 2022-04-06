@@ -1,8 +1,8 @@
-import Input from './identification/Input';
 import React from "react";
 
 
-function WebPage(){
+function WebPage({userName}){
+  console.log(userName);
   return (
     <div>
       in Web Page

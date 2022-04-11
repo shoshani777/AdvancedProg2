@@ -30,7 +30,8 @@ class Register extends React.Component {
       return;
     const uName = this.state.userName;
     if (!users.has(uName)) {
-      this.setUser(this.state);
+      users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: null});
+      this.setUser(uName);
       this.setPage(nameToLink.get('webPage'));
     }
     else {

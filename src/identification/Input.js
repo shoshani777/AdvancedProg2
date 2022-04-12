@@ -69,8 +69,10 @@ class Input extends React.Component{
         }
         const check = new RegExp(this.state.regex);
         if (check.test(cValue)) {
-            this.state.inputClass = "is-valid";
-            this.state.error = "";
+            this.setState({
+                inputClass : "is-valid",
+                error : ""
+            });
             this.inputSetter(cValue);
             if (event.keyCode === 13) {
                 inputs[(inputs.indexOf(event.target) + 1) % inputs.length].focus();
@@ -78,8 +80,11 @@ class Input extends React.Component{
             return;
         }
         this.inputSetter(null);
-        this.state.inputClass = "is-invalid"
-        this.state.error = this.eDescription;
+        this.setState({
+            inputClass : "is-invalid",
+            error : this.eDescription
+
+          })
     }
     
 

@@ -88,7 +88,7 @@ class Register extends React.Component {
           </div>
 
           <Link to={(this.state.userName && this.state.nickName && this.state.password &&
-           this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : '#'} 
+           this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : ''} 
             className="btn btn-primary" onClick={this.register} >register</Link>
         </form>
       </div>

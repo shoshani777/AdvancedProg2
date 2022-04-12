@@ -25,7 +25,7 @@ class Login extends React.Component {
     if (!(this.state.userName && this.state.password))
       return;
     const uName = this.state.userName;
-    if (users.has(uName) && users.get(uName).password == this.state.password) {
+    if (users.has(uName) && users.get(uName).password === this.state.password) {
       this.setUser(uName);
       this.setPage(nameToLink.get('webPage'));
     }
@@ -48,7 +48,6 @@ class Login extends React.Component {
   render() {
     const regex = '^[a-zA-Z]';
     const error = 'must begin with a letter'
-    const confirmPassError = 'must match password'
 
 
     const uNameElement = <Input inputSetter={this.setUserName} checkRegex={regex} type={'text'}
@@ -62,7 +61,7 @@ class Login extends React.Component {
           {uNameElement}
           {passElement}
           <Link to={(users.has(this.state.userName) && this.state.userName && this.state.password &&
-            users.get(this.state.userName).password == this.state.password) ? '/webPage' : '#'} 
+            users.get(this.state.userName).password === this.state.password) ? '/webPage' : ''} 
             className="btn btn-primary" onClick={this.login} >Login</Link>
         </form>
       

@@ -22,12 +22,12 @@ class App extends React.Component {
     this.setUser = this.setUser.bind(this);
     this.setPage = this.setPage.bind(this);
     this.defualt_url = '';
-    if(window. location. href.match(/^http:\/\/localhost:\d+\/logIn$/)!=null){this.defualt_url = 'logIn' }
-    if(window. location. href.match(/^http:\/\/localhost:\d+\/register$/)!=null){this.defualt_url = 'register' }
-    if(window. location. href.match(/^http:\/\/localhost:\d+\/webPage$/)!=null){this.defualt_url = 'webPage' }
-    if(this.defualt_url == '')
+    if(window.location.href.match(/^http:\/\/localhost:\d+\/logIn$/) != null){this.defualt_url = 'logIn' }
+    if(window.location.href.match(/^http:\/\/localhost:\d+\/register$/) != null){this.defualt_url = 'register' }
+    if(window.location.href.match(/^http:\/\/localhost:\d+\/webPage$/) != null){this.defualt_url = 'webPage' }
+    if(this.defualt_url === '')
     {
-      window. location. href = "/logIn"
+      window.location.href = "/logIn"
     }
   }
   

@@ -1,13 +1,11 @@
 import React from "react";
-import users from "./identification/users";
+import Chat from "./Chat/Chat";
 
 
 function WebPage({userName}){
-  console.log(userName);
-  console.log(users)
   return (
     <div>
-      in Web Page
+      <Chat givenChat={[{me: false, author: 'Gilad', body: 'HEY'}]}/>
     </div>
   );
 }

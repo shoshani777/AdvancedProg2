@@ -1,5 +1,6 @@
 import React from 'react'
 import './MessageForm.css'
+import $ from 'jquery';
 
 class MessageForm extends React.Component {
   constructor(props) {
@@ -15,13 +16,43 @@ class MessageForm extends React.Component {
     this.stopRecording = <button onClick={this.stopAudio}>stop</button>;
     this.recordingInputArea = <span>{this.deleteAudio} recording...</span>
 
-    this.addFileButton = 'add file'
+    this.addFileButton = <button onClick={this.addPic}>add pic</button>
+
+    this.picInputRef = React.createRef();
+
+
+    this.displayImage = <img id='displayImage' src='' alt="couldn't load" width="50" height="40" />
+
     this.state = {
       rightButton: this.recordButton,
       inputArea: this.textInput,
       leftButton: this.addFileButton
     }
+    
+  }
 
+  addPic = (event) => {
+    event.preventDefault();
+    this.picInputRef.current.click();
+  }
+
+  display = (result) => {
+    $("#displayImage").attr("src", result);
+  }
+
+  addedFile = (event) => {
+
+    const file = this.picInputRef.current.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener("load", () => this.display(reader.result), false);
+    
+    if (file) {
+      reader.readAsDataURL(file);
+      this.setState({ // image was chosen
+        inputArea: this.displayImage
+      })
+    }
   }
 
   componentDidMount = () => {
@@ -35,6 +66,9 @@ class MessageForm extends React.Component {
     }
     this.onMessageSend(this.input.value, 'text');
     this.input.value = "";
+    this.setState({
+      rightButton: this.recordButton
+    })
   }
 
   typing = (event) => {
@@ -47,6 +81,9 @@ class MessageForm extends React.Component {
       this.setState({
         rightButton: this.sendText
       })
+    }
+    if (event.keyCode === 13) {
+      this.send(event);
     }
   }
 
@@ -104,6 +141,7 @@ class MessageForm extends React.Component {
   render() {
     return (
       <form className="MessageForm">
+        <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
         <div>
           {this.state.leftButton}
         </div>

@@ -13,8 +13,3 @@ const root = ReactDOMClient.createRoot(container);
 // Initial render: Render an element to the root.
 root.render(<App />);
 
-
-// Initial render: Render an element to the root.
-root.render(
-    <App></App>
-);

@@ -7,13 +7,14 @@ class MessageList extends Component {
 
   static defaultProps = {
     messages: [],
+    group: false
   }
   
   render() {
     return (
       <div className="MessageList">
         {this.props.messages.map((message, i) => (
-          <Message key={i} {...message} />
+          <Message key={i} {...message} group={this.props.group}/>
         ))}
       </div>
     )

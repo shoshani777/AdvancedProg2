@@ -16,15 +16,25 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      user : 0, page : nameToLink.get('')
-    };
     this.setUser = this.setUser.bind(this);
     this.setPage = this.setPage.bind(this);
     this.defualt_url = '';
-    if(window.location.href.match(/^http:\/\/localhost:\d+\/logIn$/) != null){this.defualt_url = 'logIn' }
-    if(window.location.href.match(/^http:\/\/localhost:\d+\/register$/) != null){this.defualt_url = 'register' }
-    if(window.location.href.match(/^http:\/\/localhost:\d+\/webPage$/) != null){this.defualt_url = 'webPage' }
+    var pageInit = nameToLink.get('');
+    if(window.location.href.match(/^http:\/\/localhost:\d+\/logIn$/) != null) {
+      this.defualt_url = 'logIn';
+      var pageInit = nameToLink.get(this.defualt_url);
+    }
+    if(window.location.href.match(/^http:\/\/localhost:\d+\/register$/) != null) {
+      this.defualt_url = 'register';
+      var pageInit = nameToLink.get(this.defualt_url);
+    }
+    if(window.location.href.match(/^http:\/\/localhost:\d+\/webPage$/) != null) {
+      this.defualt_url = 'webPage';
+      var pageInit = nameToLink.get(this.defualt_url);
+    }
+    this.state = {
+      user : 0, page : pageInit
+    };
     if(this.defualt_url === '')
     {
       window.location.href = "/logIn"

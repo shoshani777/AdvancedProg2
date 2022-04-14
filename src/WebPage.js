@@ -6,20 +6,20 @@ import './bootstrap/dist/css/bootstrap.min.css';
 
 class WebPage extends Component {
   constructor({userName}) {
-    super();
-    this.state = {...chat_db.get(userName),clickedId:6
+    super({userName});
+    this.state = {...chat_db.get(userName),clickedId:2
       //   name: props.name , isClicked: props.isClicked,
       //   image: props.image , messages: props.messages 
     }
-    this.ChangeState.bind(this)
+    this.ChangeStateFunc = this.ChangeState.bind(this)
   }
-  
+  // checkingFunc(){
+  //   console.log("checkingFunc: ")
+  //   console.log(this.state)
+  // }
+
   ChangeState({groupIdToChange,newGroup,newClickedId,groupIdToTop}){
     var newState = this.state
-    if(typeof newClickedId !== 'undefined'){
-      newState.clickedId = newClickedId
-      alert("changedClickedId")
-    }
     if(typeof groupIdToTop !== 'undefined'){
       var groupToTop = null
       for (let index = 0; index < newState.groups.length; index++) {
@@ -53,10 +53,25 @@ class WebPage extends Component {
       newGroup.id = maxId+1
       newState.groups.unshift(newGroup)
     }
-    this.Setstate({...newState})
+    if(typeof newClickedId !== 'undefined'){
+      newState.clickedId = newClickedId
+      for (let index = 0; index < newState.groups.length; index++) {
+        const element = newState.groups[index];
+        if(element.id == newClickedId){
+          console.log("something good happened")
+        }
+        newState.groups[index].isClicked = (element.id == newClickedId);
+        //also need to zero the unread attribute of the last clicked group
+      }
+    }
+    console.log("new state: ")
+    console.log(newState)
+    this.setState({...newState})
   }
 
   render() {
+    console.log("rendered - clickedId = ")
+    console.log(this.state.clickedId)
     return (
       <div>
         <Chat givenChat={[{me: false, author: 'Gilad', body: 'HEY'}]}/>
@@ -64,7 +79,8 @@ class WebPage extends Component {
         {/* <ChatGroup props={this.state.groups[0]} isClicked={false} />
         <ChatGroup props={this.state.groups[1]} isClicked={false} /> */}
         {this.state.groups.map(element=>{
-          return <ChatGroup props={element} isClicked={element.id==this.state.clickedId} setGroup={this.ChangeState} />
+          console.log("creating group with id: "+element.id+" and is clicked: ")
+          return <ChatGroup props={element} setGroup={this.ChangeStateFunc} />
         })}
       </div>
     )

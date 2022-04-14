@@ -1,0 +1,60 @@
+.group{
+    width: 22rem;
+    height: 4.7em;
+    padding: 0;
+    border: 0;
+}
+.clickedgroup{
+    background-color: rgb(205, 205, 205)!important;
+}
+.group:hover{
+    cursor: pointer;
+    background-color: rgb(238, 238, 238);
+}
+.bigtbl{
+    width: 100%;
+}
+.img{
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 100%;
+}
+.imgTd{
+    width:22%;
+}
+.textTd{
+    width: 78%;
+    padding: 0;
+    border-spacing: 0;
+    text-align: start;
+}
+.headln{
+    height:60%;
+    font-size: 1.45rem;
+}
+.subtitles{
+    height:40%;
+    font-size: large;
+}
+.smalltbl{
+    width: 100%;
+    height: 100%;
+}
+.lastmsg{
+    padding-inline-start: 15%;
+}
+.groupname{
+    padding-inline-start: 8%;
+}
+.unreadTd{
+    width: 13%
+}
+.unreadDiv{
+    background-color: rgb(41, 219, 41);
+    border-radius: 100%;
+    font-size: small;
+    text-align: center;
+    color: white;
+    width:95%;
+    margin-top: 20%;
+}

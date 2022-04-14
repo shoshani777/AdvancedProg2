@@ -14,15 +14,19 @@ class MessageForm extends React.Component {
     this.recordButton = <button onClick={this.recordAudio}>record</button>;
     this.deleteAudio = <button onClick={this.removeAudio}>remove</button>;
     this.stopRecording = <button onClick={this.stopAudio}>stop</button>;
-    this.recordingInputArea = <span>{this.deleteAudio} recording...</span>
-
+    this.recordingInputArea = "recording..."
+    
     this.addFileButton = <button onClick={this.addPic}>add pic</button>
 
     this.picInputRef = React.createRef();
 
 
-    this.displayImage = <img id='displayImage' src='' alt="couldn't load" width="50" height="40" />
+    this.displayImage = <img className='display-image' id='displayImage' src='' alt="couldn't load" width="50" height="40" />
 
+    this.sendImageButton = <button onClick={this.sendPic}>sendImage</button>
+    
+    this.cancelImageButton = <button onClick={this.cancelPic}>cancel</button>
+    this.imageToSend = null;
     this.state = {
       rightButton: this.recordButton,
       inputArea: this.textInput,
@@ -31,16 +35,35 @@ class MessageForm extends React.Component {
     
   }
 
-  addPic = (event) => {
-    event.preventDefault();
+  sendPic = () => {
+    this.onMessageSend(this.imageToSend, 'img');
+    this.setState({
+      rightButton: this.recordButton,
+      inputArea: this.textInput,
+      leftButton: this.addFileButton
+    });
+    this.imageToSend = null;
+  }
+
+  cancelPic = () => {
+    this.imageToSend = null;
+    this.setState({
+      rightButton: this.recordButton,
+      inputArea: this.textInput,
+      leftButton: this.addFileButton
+    });
+  }
+
+  addPic = () => {
     this.picInputRef.current.click();
   }
 
   display = (result) => {
+    this.imageToSend = result;
     $("#displayImage").attr("src", result);
   }
 
-  addedFile = (event) => {
+  addedFile = () => {
 
     const file = this.picInputRef.current.files[0];
     const reader = new FileReader();
@@ -50,7 +73,9 @@ class MessageForm extends React.Component {
     if (file) {
       reader.readAsDataURL(file);
       this.setState({ // image was chosen
-        inputArea: this.displayImage
+        inputArea: this.displayImage,
+        rightButton: this.sendImageButton,
+        leftButton: this.cancelImageButton
       })
     }
   }
@@ -59,8 +84,7 @@ class MessageForm extends React.Component {
     this.input.focus();
   }
 
-  send = (event) => {
-    event.preventDefault();
+  send = () => {
     if (this.input.value === '') {
         return;
     }
@@ -87,12 +111,11 @@ class MessageForm extends React.Component {
     }
   }
 
-  recordAudio = (event) => {
-    event.preventDefault();
+  recordAudio = () => {
     this.setState({
       inputArea: this.recordingInputArea,
       rightButton: this.stopRecording,
-      leftButton: ''
+      leftButton: this.deleteAudio
     });
 
     navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
@@ -123,15 +146,13 @@ class MessageForm extends React.Component {
     });
   }
 
-  stopAudio = (event) => {
-    event.preventDefault();
+  stopAudio = () => {
     if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
       this.shouldSend = true;
       this.mediaRecorder.stop();
     }
   }
-  removeAudio = (event) => {
-    event.preventDefault();
+  removeAudio = () => {
     if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
       this.shouldSend = false;
       this.mediaRecorder.stop();
@@ -140,18 +161,18 @@ class MessageForm extends React.Component {
 
   render() {
     return (
-      <form className="MessageForm">
+      <div className="MessageForm">
         <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
-        <div>
+        <div className="left-button-container">
           {this.state.leftButton}
         </div>
         <div className="input-container">
           {this.state.inputArea}
         </div>
-        <div className="button-container">
+        <div className="right-button-container">
           {this.state.rightButton}
         </div>
-      </form>
+      </div>
     )
   }
 }

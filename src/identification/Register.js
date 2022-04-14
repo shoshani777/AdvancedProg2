@@ -22,7 +22,10 @@ class Register extends React.Component {
     this.register = this.register.bind(this);  
     this.setPage = props.setPage;
     this.setUser = props.setUser;
+    this.profilePic = null;
   }
+
+
 
   register() {
     if (!(this.state.userName && this.state.nickName && this.state.password &&
@@ -30,7 +33,7 @@ class Register extends React.Component {
       return;
     const uName = this.state.userName;
     if (!users.has(uName)) {
-      users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: null});
+      users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: this.profilePic});
       this.setUser(uName);
       this.setPage(nameToLink.get('webPage'));
     }

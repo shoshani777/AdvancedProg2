@@ -4,13 +4,25 @@
   }
   
   .MessageForm .input-container {
+    background: #fff;
     flex: 1;
     margin: 1px;
   }
   
-  .MessageForm .button-container {
+  .MessageForm .right-button-container {
     flex: 0 0 6em;
     margin: 1px 1px 1px 0;
+  }
+
+  .MessageForm .display-image {
+    display: block;
+    max-width:230px;
+    max-height:95px;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    height: auto;
+    border-style: inset;
   }
   
   .MessageForm input, .MessageForm button {

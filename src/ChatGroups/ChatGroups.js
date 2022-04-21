@@ -5,17 +5,13 @@ import '../bootstrap/dist/css/bootstrap.min.css';
 import "./ChatGroups.css";
 
 class ChatGroup extends Component {
-    constructor({props,setGroup}) {
-      if(props.isClicked){
-        console.log("clicked with id: ")
-        console.log(props.id)
-      }
-      super({props,setGroup});
-      this.state = {...props
+    constructor(props) {  
+      super(props);
+      this.state = {...props.group
         //   name: props.name , isClicked: props.isClicked,
         //   image: props.image , messages: props.messages 
       }
-      this.setGroup = setGroup;
+      this.setGroup = props.setGroup;
       this.handleNewMessageByMe = this.handleNewMessageByMe.bind(this);
       this.handleClick = this.handleClick.bind(this);
     } 
@@ -27,7 +23,6 @@ class ChatGroup extends Component {
       }
     //not finished!! should alert db and turn of any other clicked ones
     handleClick = ()=>{
-      console.log("clicked")
       if(!this.state.isClicked){
         //also need to zero the unread attribute of the last clicked group
         var oldGroup = this.state
@@ -36,9 +31,7 @@ class ChatGroup extends Component {
       }
     }
     render() {
-      console.log("group rendered- is clicked: "+this.state.isClicked+" and id: "+this.state.id)
-      console.log("group rendered2- all state: ")
-      console.log(this.state)
+      console.log(this.state.name)
       //future logic to get the last message
       const lastmsg = "Last message in the chat";
       var unreadMsg = <></>;
@@ -52,26 +45,32 @@ class ChatGroup extends Component {
       return (
         <a className={linkClass} onClick={this.handleClick}>
           <table border = "0" className='bigtbl'>
-            <tr>
-              <td className='imgTd'>
-              <img className='img' src={this.state.image} alt="db error"></img>
-              </td>
-              <td className='textTd'>
-                <table border = "0" className='smalltbl'>
-                  <tr className='headln'>
-                    <td>
-                      <p className="card-title groupname">{this.state.name}</p>
-                    </td>
-                    <td className='unreadTd'>
-                      {unreadMsg}
-                    </td>
-                  </tr>
-                  <tr className='subtitles'>
-                    <p className='card-subtitle lastmsg'>{lastmsg}</p>
-                  </tr>
-                </table>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td className='imgTd'>
+                <img className='img' src={this.state.image} alt="db error"></img>
+                </td>
+                <td className='textTd'>
+                  <table border = "0" className='smalltbl'>
+                    <tbody>
+                      <tr className='headln'>
+                        <td>
+                          <p className="card-title groupname">{this.state.name}</p>
+                        </td>
+                        <td className='unreadTd'>
+                          {unreadMsg}
+                        </td>
+                      </tr>
+                      <tr className='subtitles'>
+                        <td>
+                          <p className='card-subtitle lastmsg'>{lastmsg}</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </a>
       )

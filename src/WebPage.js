@@ -3,15 +3,20 @@ import Chat from "./Chat/Chat";
 import ChatGroup from "./ChatGroups/ChatGroups";
 import chat_db from "./fictiveChatDB";
 import './bootstrap/dist/css/bootstrap.min.css';
+import NewContact from "./ChatGroups/NewContact";
 
 class WebPage extends Component {
-  constructor({userName}) {
-    super({userName});
-    this.state = {...chat_db.get(userName),clickedId:2
+  constructor(props) {
+    super(props);
+    this.state = {...chat_db.get(props.userName),clickedId:null
       //   name: props.name , isClicked: props.isClicked,
       //   image: props.image , messages: props.messages 
     }
     this.ChangeStateFunc = this.ChangeState.bind(this)
+    for (let index = 0; index < this.state.groups.length; index++) {
+      const element = this.state.groups[index];
+      element.isClicked = false;
+    }
   }
   // checkingFunc(){
   //   console.log("checkingFunc: ")
@@ -50,38 +55,47 @@ class WebPage extends Component {
           maxId = element.id
         }
       }
-      newGroup.id = maxId+1
-      newState.groups.unshift(newGroup)
+      newGroup.id = maxId+1;
+      newState.groups.unshift(newGroup);
+      newState.clickedId = maxId+1;
+      for (let index = 0; index < newState.groups.length; index++) {
+        const element = newState.groups[index];
+        newState.groups[index].isClicked = (element.id == maxId+1);
+        //also need to zero the unread attribute of the last clicked group
+      }
     }
     if(typeof newClickedId !== 'undefined'){
       newState.clickedId = newClickedId
       for (let index = 0; index < newState.groups.length; index++) {
         const element = newState.groups[index];
-        if(element.id == newClickedId){
-          console.log("something good happened")
-        }
         newState.groups[index].isClicked = (element.id == newClickedId);
         //also need to zero the unread attribute of the last clicked group
       }
     }
-    console.log("new state: ")
-    console.log(newState)
-    this.setState({...newState})
+    console.log(newState);
+    this.setState({...newState });
   }
 
   render() {
-    console.log("rendered - clickedId = ")
-    console.log(this.state.clickedId)
+    var list =[]
+    for (let index = 0; index < this.state.groups.length; index++) {
+      list.push(<ChatGroup key={Math.random()} group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc} />);
+      //list.push(<ChatGroup key={this.state.groups[index].id} group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc} />);
+    }
+    console.log(list)
     return (
       <div>
         <Chat givenChat={[{me: false, author: 'Gilad', body: 'HEY'}]}/>
-        {/* <img src={chat_db.get("shoshani777").image} alt="db error"></img> */}
-        {/* <ChatGroup props={this.state.groups[0]} isClicked={false} />
-        <ChatGroup props={this.state.groups[1]} isClicked={false} /> */}
-        {this.state.groups.map(element=>{
-          console.log("creating group with id: "+element.id+" and is clicked: ")
+        <NewContact AddingFunc={this.ChangeStateFunc}/>
+        {list}
+        {/* {this.state.groups.map(element=>{
+          if(element.id ==5){
+            console.log(this.state)
+            console.log(element)
+          }
           return <ChatGroup props={element} setGroup={this.ChangeStateFunc} />
-        })}
+        })} */}
+
       </div>
     )
   }

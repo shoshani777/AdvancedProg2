@@ -1,9 +1,9 @@
 import React from "react";
 
 
-function BackGround(prop){
+function BackGround(props){
   return (
-    <link rel="stylesheet" href={prop.css} />
+    <link rel="stylesheet" href={props.css} />
   );
 }
 export default BackGround;

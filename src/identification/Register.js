@@ -5,6 +5,8 @@ import {
 } from "react-router-dom";
 import users from './users';
 import nameToLink from '../nameToLink';
+import defualtImg from "../images/defualtChat.jpg";
+import $ from 'jquery';
 
 
 class Register extends React.Component {
@@ -12,7 +14,7 @@ class Register extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userName : 0, nickName : 0, password : 0, confirmPass : 0
+      userName : 0, nickName : 0, password : 0, confirmPass : 0, image: defualtImg
     };
     this.cPassRef = React.createRef();
     this.setUserName = this.setUserName.bind(this);
@@ -22,9 +24,32 @@ class Register extends React.Component {
     this.register = this.register.bind(this);  
     this.setPage = props.setPage;
     this.setUser = props.setUser;
-    this.profilePic = null;
+    this.picInputRef = React.createRef();
   }
 
+
+  addPic = (event) => {
+    this.picInputRef.current.click();
+ }
+ 
+ display = (result) => {
+     this.setState({
+         image: result
+     })
+     $("#displayImage").attr("src", result);
+ }
+ 
+ addedFile = () => {
+ 
+     const file = this.picInputRef.current.files[0];
+     const reader = new FileReader();
+ 
+     reader.addEventListener("load", () => this.display(reader.result), false);
+     
+     if (file) {
+       reader.readAsDataURL(file);
+     }
+ }
 
 
   register() {
@@ -33,7 +58,7 @@ class Register extends React.Component {
       return;
     const uName = this.state.userName;
     if (!users.has(uName)) {
-      users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: this.profilePic});
+      users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: this.state.image});
       this.setUser(uName);
       this.setPage(nameToLink.get('webPage'));
     }
@@ -80,20 +105,19 @@ class Register extends React.Component {
     cPassRef={this.cPassRef}/>;
     return (
       <div className='container'>
-        <form>
           {uNameElement}
           {nNameElement}
           {passElement}
           {cPassElement}
           <div className="mb-3">
-          <label htmlFor="profilePic" className="form-label">Add profile picture!</label>
-          <input className="form-control" type="file" id="profilePic" accept="image/*" />
+          <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
+          <img className='display-image' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
+          <button onClick={this.addPic}>add pic</button>
           </div>
 
           <Link to={(this.state.userName && this.state.nickName && this.state.password &&
            this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : ''} 
             className="btn btn-primary" onClick={this.register} >register</Link>
-        </form>
       </div>
     );
   }

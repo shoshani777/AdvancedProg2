@@ -15,12 +15,17 @@ class NewContact extends Component {
       this.setChatNameFunc = this.setChatName.bind(this);
       this.handleClickFunc = this.handleAddClick.bind(this);
       this.resetNameFunc = this.resetName.bind(this);
+      this.inputRef = React.createRef();
+      this.picInputRef = React.createRef();
     }
 
     resetName=()=>{
         this.setChatNameFunc("");
         document.getElementById('ChatNameId').value = ''
-        //צריך לבקש מגלעד שיהיה מצב עיצובי מיוחד שאוכל לחזור אליו
+        this.inputRef.current.setState({
+            inputClass: '',
+            error: ''
+        })
     }
     setChatName(value) {
         this.setState({
@@ -37,11 +42,34 @@ class NewContact extends Component {
         }
     }
 
+    addPic = () => {
+       this.picInputRef.current.click();
+    }
+    
+    display = (result) => {
+        this.setState({
+            image: result
+        })
+        $("#displayImage").attr("src", result);
+    }
+    
+    addedFile = () => {
+    
+        const file = this.picInputRef.current.files[0];
+        const reader = new FileReader();
+    
+        reader.addEventListener("load", () => this.display(reader.result), false);
+        
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+    }
+
     render() {
         const regex = '^[a-zA-Z]';
         const error = 'must begin with a letter';
         const ChatNameElement = <Input inputSetter={this.setChatNameFunc} checkRegex={regex} type={'text'}
-        id={'ChatNameId'} description={'Chat Name'} eDescription={error}/>;
+        id={'ChatNameId'} description={'Chat Name'} ref={this.inputRef} eDescription={error}/>;
         return (
           <>
             <a type="button" href='#' className="btn addChat" data-toggle="modal" data-target="#CenteralModal" onClick={this.resetNameFunc}>
@@ -62,6 +90,9 @@ class NewContact extends Component {
                 </div>
                 <div className="modal-body">
                     {ChatNameElement}
+                    <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
+                    <img className='display-image' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
+                    <button onClick={this.addPic}>add pic</button>
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

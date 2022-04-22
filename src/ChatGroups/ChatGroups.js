@@ -31,7 +31,6 @@ class ChatGroup extends Component {
       }
     }
     render() {
-      console.log(this.state.name)
       //future logic to get the last message
       const lastmsg = "Last message in the chat";
       var unreadMsg = <></>;

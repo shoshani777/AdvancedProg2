@@ -6,6 +6,7 @@ class Chat extends Component {
     constructor(props) {
       super(props);
       this.group = props.group;
+      console.log(props)
       if (props.givenChat) {
         this.state = {
             messages: [{me: false, body: 'encrypted', type: 'text'}].concat(props.givenChat)

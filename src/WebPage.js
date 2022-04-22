@@ -72,7 +72,6 @@ class WebPage extends Component {
         //also need to zero the unread attribute of the last clicked group
       }
     }
-    console.log(newState);
     this.setState({...newState });
   }
 
@@ -82,12 +81,24 @@ class WebPage extends Component {
       list.push(<ChatGroup key={Math.random()} group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc} />);
       //list.push(<ChatGroup key={this.state.groups[index].id} group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc} />);
     }
-    console.log(list)
+    var chat = <></>;//need defualt chat
+    if(this.state.clickedId!==null){
+      for (let index = 0; index < this.state.groups.length; index++) {
+        const element = this.state.groups[index];
+        if(element.id===this.state.clickedId){
+          chat = <>
+          <Chat key={Math.random()} givenChat={element.messages} group={false}/>
+          </>
+        }
+      }
+    }
     return (
       <div>
-        <Chat givenChat={[{me: false, author: 'Gilad', body: 'HEY'}]}/>
+        {/* <Chat givenChat={[{me: false, author: 'Gilad', body: 'HEY'}]}/>
+        <NewContact AddingFunc={this.ChangeStateFunc}/> */}
         <NewContact AddingFunc={this.ChangeStateFunc}/>
         {list}
+        {chat}
         {/* {this.state.groups.map(element=>{
           if(element.id ==5){
             console.log(this.state)

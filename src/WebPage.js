@@ -4,24 +4,23 @@ import ChatGroup from "./ChatGroups/ChatGroups";
 import chat_db from "./fictiveChatDB";
 import './bootstrap/dist/css/bootstrap.min.css';
 import NewContact from "./ChatGroups/NewContact";
+import "./WebPage.css";
 
 class WebPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {...chat_db.get(props.userName),clickedId:null
-      //   name: props.name , isClicked: props.isClicked,
-      //   image: props.image , messages: props.messages 
+    this.state = {
+      ...chat_db.get(props.userName),clickedId:null,userName:props.userName
     }
     this.ChangeStateFunc = this.ChangeState.bind(this)
     for (let index = 0; index < this.state.groups.length; index++) {
       const element = this.state.groups[index];
+      if(element.isClicked){
+        this.state.groups[index].unread = 0;
+      }
       element.isClicked = false;
     }
   }
-  // checkingFunc(){
-  //   console.log("checkingFunc: ")
-  //   console.log(this.state)
-  // }
 
   ChangeState({groupIdToChange,newGroup,newClickedId,groupIdToTop}){
     var newState = this.state
@@ -46,7 +45,7 @@ class WebPage extends Component {
           prevGroup = element
         }
       }
-      newState.groups[gruopPlace] = newGroup
+      newState.groups[gruopPlace] = {...newState.groups[gruopPlace],...newGroup}
     } else if(typeof newGroup !== 'undefined'){
       var maxId = 1
       for (let index = 0; index < newState.groups.length; index++) {
@@ -60,16 +59,20 @@ class WebPage extends Component {
       newState.clickedId = maxId+1;
       for (let index = 0; index < newState.groups.length; index++) {
         const element = newState.groups[index];
+        if(element.isClicked){
+          newState.groups[index].unread = 0;
+        }
         newState.groups[index].isClicked = (element.id == maxId+1);
-        //also need to zero the unread attribute of the last clicked group
       }
     }
     if(typeof newClickedId !== 'undefined'){
       newState.clickedId = newClickedId
       for (let index = 0; index < newState.groups.length; index++) {
         const element = newState.groups[index];
+        if(element.isClicked){
+          newState.groups[index].unread = 0;
+        }
         newState.groups[index].isClicked = (element.id == newClickedId);
-        //also need to zero the unread attribute of the last clicked group
       }
     }
     this.setState({...newState });
@@ -78,8 +81,7 @@ class WebPage extends Component {
   render() {
     var list =[]
     for (let index = 0; index < this.state.groups.length; index++) {
-      list.push(<ChatGroup key={Math.random()} group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc} />);
-      //list.push(<ChatGroup key={this.state.groups[index].id} group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc} />);
+      list.push(<li className="list-group-item noMargin" key={Math.random()}><ChatGroup group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc}/></li>);
     }
     var chat = <></>;//need defualt chat
     if(this.state.clickedId!==null){
@@ -87,26 +89,51 @@ class WebPage extends Component {
         const element = this.state.groups[index];
         if(element.id===this.state.clickedId){
           chat = <>
-          <Chat key={Math.random()} givenChat={element.messages} group={false}/>
+          <Chat key={Math.random()} givenChat={element.messages} group={false} unread={element.unread} id={this.state.groups[index].id} updateFunc={this.ChangeStateFunc} />
           </>
         }
       }
     }
     return (
       <div>
-        {/* <Chat givenChat={[{me: false, author: 'Gilad', body: 'HEY'}]}/>
-        <NewContact AddingFunc={this.ChangeStateFunc}/> */}
-        <NewContact AddingFunc={this.ChangeStateFunc}/>
-        {list}
-        {chat}
-        {/* {this.state.groups.map(element=>{
-          if(element.id ==5){
-            console.log(this.state)
-            console.log(element)
-          }
-          return <ChatGroup props={element} setGroup={this.ChangeStateFunc} />
-        })} */}
-
+        <div className="webPageContainer container-fluid overflow-auto">
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-2 col-md-auto groupColumn overflow-auto">
+              <div>
+                <table border="1" className="userTbl">
+                  <tbody>
+                    <tr>
+                      <td className="imgTd">
+                        <img className="userImg" src={this.state.image}/>
+                      </td>
+                      <td>
+                        <div>
+                          <p className="userNameTxt text-truncate">
+                            {this.state.userName}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="newContactTd">
+                        <NewContact AddingFunc={this.ChangeStateFunc}/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="groupDiv">
+                <ul className="list-group">
+                  {list}
+                </ul>
+              </div>
+            </div>
+            <div className="col-8">
+              {chat}
+            </div>
+            <div className="col-1 overflow-auto">
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

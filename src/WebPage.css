@@ -1,0 +1,32 @@
+
+.groupColumn{
+  margin-top: 3%;
+  margin-bottom: 4%;
+}
+
+.groupDiv{
+  max-height: 45rem;
+  overflow-y: scroll;
+}
+.userTbl{
+  width: 100%;
+}
+.newContactTd{
+  width:14%;
+}
+.userImg{
+  border-radius: 100%;
+  width: 4rem;
+}
+.imgTd{
+  width: 4.3rem;
+}
+.userNameTxt{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:x-large;
+  text-align: center;
+}
+.noMargin{
+  margin: 0;
+  padding: 0;
+}

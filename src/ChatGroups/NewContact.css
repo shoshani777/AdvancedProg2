@@ -1,4 +1,8 @@
 .addChat{
     background-color: lightgreen;
     border: 0;
+    width:3rem;
+}
+.addChatIcon{
+    size:2.5rem;
 }

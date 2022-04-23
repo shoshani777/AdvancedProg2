@@ -11,6 +11,7 @@ import WebPage from "./WebPage";
 import nameToLink from "./nameToLink";
 import BackGround from "./BackGround";
 import './bootstrap/dist/css/bootstrap.min.css';
+import './App.css'
 
 class App extends React.Component {
 
@@ -62,13 +63,13 @@ class App extends React.Component {
       <>
       <BackGround css={this.state.page.bg}/>
       <BrowserRouter>
+      <Link className={this.state.page.exitCss} to={linkTo} onClick={()=>{this.setPage(nameToLink.get(this.state.page.linkTo))}} >{this.state.page.strLinkTo} </Link>
       <Routes>
         <Route path='' element={LoginElement}></Route>
         <Route path='/register' element={RegisterElement}></Route>
         <Route path='/logIn' element={LoginElement}></Route>
         <Route path='/webPage' element={WebPageElement}></Route>
       </Routes>
-        <Link to={linkTo} onClick={()=>{this.setPage(nameToLink.get(this.state.page.linkTo))}} >{this.state.page.strLinkTo} </Link>
         {/* take the next line of when submitting */}
         {/* <br></br><Link to='/webPage' onClick={()=>{this.setPage(nameToLink.get('webPage'))}} >go to web page</Link> */}
       </BrowserRouter>

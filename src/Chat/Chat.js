@@ -4,31 +4,23 @@ import MessageForm from './MessageForm'
 
 class Chat extends Component {
     constructor(props) {
+      //has props.unread
       super(props);
       this.group = props.group;
-      console.log(props)
-      if (props.givenChat) {
-        this.state = {
-            messages: [{me: false, body: 'encrypted', type: 'text'}].concat(props.givenChat)
-          }
+      this.state = {
+          messages: props.givenChat,id: props.id,unread: props.unread
       }
-      else {
-        this.state = {
-            messages: [{me: false, body: 'encrypted', type: 'text'}]
-        }
-      }
-      
+      this.updateFunc = props.updateFunc;
     } 
 
     handleNewMessage = (text, type) => {
-        this.setState({
-          messages: [...this.state.messages, { me: true, author: "Me", body: text, type: type, time: new Date() }],
-        })
-      }
+      var changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type}]}
+      this.updateFunc({groupIdToChange:this.state.id,newGroup:changedGroup})
+    }
     render() {
         return (
           <div className="Chat">
-            <MessageList messages={this.state.messages} group={this.group}/>
+            <MessageList messages={this.state.messages} group={this.group} unread={this.state.unread}/>
             <MessageForm onMessageSend={this.handleNewMessage} />
           </div>
         )

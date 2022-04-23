@@ -7,6 +7,7 @@ import users from './users';
 import nameToLink from '../nameToLink';
 import defualtImg from "../images/defualtChat.jpg";
 import $ from 'jquery';
+import chat_db from '../fictiveChatDB';
 
 
 class Register extends React.Component {
@@ -59,6 +60,7 @@ class Register extends React.Component {
     const uName = this.state.userName;
     if (!users.has(uName)) {
       users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: this.state.image});
+      chat_db.set(uName, {image: this.state.image, groups: []})
       this.setUser(uName);
       this.setPage(nameToLink.get('webPage'));
     }

@@ -9,6 +9,9 @@ import "./WebPage.css";
 class WebPage extends Component {
   constructor(props) {
     super(props);
+    if (!props.userName) {
+      window.location.href = "/logIn";
+    }
     this.state = {
       ...chat_db.get(props.userName),clickedId:null,userName:props.userName
     }

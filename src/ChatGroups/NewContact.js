@@ -9,36 +9,38 @@ class NewContact extends Component {
     constructor(props) {
       super(props);
       this.state={
-        name:null,image:defualtImg
+        name:null
       }
       this.addFunc = props.AddingFunc;
       this.setChatNameFunc = this.setChatName.bind(this);
-      this.handleClickFunc = this.handleAddClick.bind(this);
-      this.resetNameFunc = this.resetName.bind(this);
       this.inputRef = React.createRef();
       this.picInputRef = React.createRef();
     }
 
-    resetName=()=>{
+    resetNameFunc=()=>{
+        $("#displayImage").attr("src", defualtImg);
+        this.setState({
+            Image: defualtImg
+        });
         this.setChatNameFunc("");
-        document.getElementById('ChatNameId').value = ''
         this.inputRef.current.setState({
             inputClass: '',
             error: ''
         })
+        $("#ChatNameId").val('');
+        
     }
     setChatName(value) {
         this.setState({
             name: value
         })
     }
-    handleAddClick=()=>{
+    handleClickFunc=()=>{
         const input = document.getElementById('ChatNameId')
         if(input.classList.contains("is-valid"))
         {
-            this.addFunc({newGroup:{id:0 , isClicked: false, name:this.state.name , image:this.state.image , unreadMark: 0, unread: 0, messages:[]}})
+            this.addFunc({newGroup:{id:0 , isClicked: false, name:this.state.name , image:$("#displayImage").attr("src") , unreadMark: 0, unread: 0, messages:[]}})
             $("[data-dismiss=modal]").trigger({ type: "click" });
-            console.log($('ChatNameId'))
         }
     }
 
@@ -47,9 +49,6 @@ class NewContact extends Component {
     }
     
     display = (result) => {
-        this.setState({
-            image: result
-        })
         $("#displayImage").attr("src", result);
     }
     

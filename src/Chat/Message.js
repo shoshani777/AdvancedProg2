@@ -7,9 +7,11 @@ class Message extends Component {
   render() {
     var messageClass = 'Message';
     messageClass += this.props.author ? '' : ' log';
-    messageClass += this.props.me ? ' me' : '';
+    if (this.props.author) {
+      messageClass += this.props.me? ' me' : ' other';
+    }
     const authorDisplay = !this.props.me && this.props.group && this.props.author && (
-      <span className="author">{this.props.author}:</span>
+      <span className="author">{this.props.author}</span>
     )
     
     if (this.props.type === 'text') {
@@ -23,7 +25,7 @@ class Message extends Component {
         return (
           <div className={messageClass}>
             {authorDisplay}
-            <img src={this.props.body} alt="couldn't load" width="50" height="40" />
+            <img src={this.props.body} alt="couldn't load" width="100" height="80" />
           </div>
         )
     } else if (this.props.type === 'audio') {

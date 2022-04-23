@@ -1,6 +1,5 @@
 import React from 'react'
 import './MessageForm.css'
-import $ from 'jquery';
 
 class MessageForm extends React.Component {
   constructor(props) {
@@ -10,22 +9,22 @@ class MessageForm extends React.Component {
     this.shouldSend = false;
     this.textInput = <input type="text" ref={(node) => (this.input = node)} 
                       placeholder="Enter your message..." onKeyUp={this.typing}/>;
-    this.sendText = <button onClick={this.send}>send</button>
-    this.recordButton = <button onClick={this.recordAudio}>record</button>;
-    this.deleteAudio = <button onClick={this.removeAudio}>remove</button>;
-    this.stopRecording = <button onClick={this.stopAudio}>stop</button>;
+    this.sendText = <button className="bi bi-send" onClick={this.send}></button>
+    this.recordButton = <button className="bi bi-mic-fill" onClick={this.recordAudio}></button>;
+    this.deleteAudio = <button className="bi bi-trash" onClick={this.removeAudio}></button>;
+    this.stopRecording = <button className="bi bi-send-fill" onClick={this.stopAudio}></button>;
     this.recordingInputArea = "recording..."
     
-    this.addFileButton = <button onClick={this.addPic}>add pic</button>
+    this.addFileButton = <button className="bi bi-image" onClick={this.addPic}></button>
 
     this.picInputRef = React.createRef();
 
+    this.displayImageRef = React.createRef();
+    this.displayImage = <img className='display-image' ref={this.displayImageRef} id='displayImage' src='' alt="couldn't load" width="50" height="40" />
 
-    this.displayImage = <img className='display-image' id='displayImage' src='' alt="couldn't load" width="50" height="40" />
-
-    this.sendImageButton = <button onClick={this.sendPic}>sendImage</button>
+    this.sendImageButton = <button className="bi bi-send-fill" onClick={this.sendPic}></button>
     
-    this.cancelImageButton = <button onClick={this.cancelPic}>cancel</button>
+    this.cancelImageButton = <button className="bi bi-trash" onClick={this.cancelPic}></button>
     this.imageToSend = null;
     this.state = {
       rightButton: this.recordButton,
@@ -59,8 +58,8 @@ class MessageForm extends React.Component {
   }
 
   display = (result) => {
+    this.displayImageRef.current.src = result;
     this.imageToSend = result;
-    $("#displayImage").attr("src", result);
   }
 
   addedFile = () => {
@@ -72,7 +71,7 @@ class MessageForm extends React.Component {
     
     if (file) {
       reader.readAsDataURL(file);
-      this.setState({ // image was chosen
+      this.setState({
         inputArea: this.displayImage,
         rightButton: this.sendImageButton,
         leftButton: this.cancelImageButton
@@ -129,7 +128,9 @@ class MessageForm extends React.Component {
       });
 
       mediaRecorder.addEventListener("stop", () => {
-        this.mediaRecorder.stream.getTracks()[0].stop();
+        this.mediaRecorder.stream.getTracks().forEach((track) => {
+          track.stop();
+        });
         const audioBlob = new Blob(audioChunks);
         const audioUrl = URL.createObjectURL(audioBlob);
         if (this.shouldSend) {

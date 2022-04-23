@@ -2,3 +2,7 @@
     overflow-y: auto;
     padding: 4px;
   }
+
+  .Wrapper {
+    margin-bottom: 2rem; /* messages distance */
+  }

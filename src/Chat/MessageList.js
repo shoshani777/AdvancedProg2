@@ -14,7 +14,9 @@ class MessageList extends Component {
     return (
       <div className="MessageList">
         {this.props.messages.map((message, i) => (
-          <Message key={i} {...message} group={this.props.group}/>
+          <div className='Wrapper' key={i}>
+            <Message {...message} group={this.props.group}/>
+          </div>
         ))}
       </div>
     )

@@ -1,47 +1,45 @@
 .Message {
+  word-wrap: break-word;
   border-radius: 0.5rem;
-  padding-left: 0.5rem; /* text distance from border */
-  margin: 1rem; /* messages distance */
-  height: 5rem;
-    border: 3px solid gray;
-    background: lightgray;
-    position: relative;
+  padding: 0.5rem; /* text distance from border */
+  min-height: 2rem;
+  width: 60%;
+  position: relative;
 }
 
 .Message:before {
   content: "";
   position: absolute;
   top: 100%;
-  left: 20px;
-  width: 0;
-  border-top: 20px solid black;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
+}
+
+.Message.me:before {
+  left: 1rem;
+  border-top: 1rem solid lightblue;
+  border-right: 1rem solid transparent;
+}
+
+.Message.other:before {
+  right: 1rem;
+  border-top: 1rem solid lightgreen;
+  border-left: 1rem solid transparent;
 }
   
   .Message.log {
-    color: yellow !important;
-  }
-  
-  .Message .author {
-    font-weight: bold;
-    color: #888;
-    margin: 0 5px 0 0;
+    margin: auto;
+    text-align: center;
+    background-color: yellow;
+    width: 30%;
   }
   
   .Message.me {
-    width: 60%;
-    word-wrap: break-word;
     background-color: lightblue;
-    color: black;
   }
 
   .Message.other {
-    float: right;
-    width: 60%;
-    word-wrap: break-word;
+    margin-left: auto; 
+    margin-right: 0;
     background-color: lightgreen;
-    color: black;
   }
 
   

@@ -12,19 +12,11 @@ class ChatGroup extends Component {
         //   image: props.image , messages: props.messages 
       }
       this.setGroup = props.setGroup;
-      this.handleNewMessageByMe = this.handleNewMessageByMe.bind(this);
       this.handleClick = this.handleClick.bind(this);
     } 
 
-    handleNewMessageByMe = (text) => {
-        this.setState({
-          messages: [...this.state.group.messages, { me: true, author: "Me", body: text, time: new Date() }],
-        })
-      }
-    //not finished!! should alert db and turn of any other clicked ones
     handleClick = ()=>{
       if(!this.state.isClicked){
-        //also need to zero the unread attribute of the last clicked group
         var oldGroup = this.state
         oldGroup.unreadMark = 0
         this.setGroup({groupIdToChange:oldGroup.id,newGroup:oldGroup,newClickedId:oldGroup.id})
@@ -32,7 +24,21 @@ class ChatGroup extends Component {
     }
     render() {
       //future logic to get the last message
-      const lastmsg = "Last message in the chat";
+      var lastmsg = "";
+      if(this.state.messages.length > 0){
+        var last = this.state.messages[this.state.messages.length-1]
+        if(!last.me){
+          lastmsg+=last.author+": "
+        }
+        if(last.type==="img"){
+          lastmsg+="image"
+        } else if(last.type==="audio"){
+          lastmsg+="recording"
+        } else if(last.type==="text"){
+          lastmsg+=last.body
+        }
+      }
+
       var unreadMsg = <></>;
       if(this.state.unreadMark>0){
         unreadMsg = <div className='unreadDiv'><p>{this.state.unreadMark}</p></div>
@@ -62,7 +68,7 @@ class ChatGroup extends Component {
                       </tr>
                       <tr className='subtitles'>
                         <td>
-                          <p className='card-subtitle lastmsg'>{lastmsg}</p>
+                          <p className='card-subtitle lastmsg text-truncate'>{lastmsg}</p>
                         </td>
                       </tr>
                     </tbody>

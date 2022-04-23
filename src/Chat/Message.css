@@ -1,10 +1,26 @@
 .Message {
-    line-height: 1.5em;
-    color: rebeccapurple;
-  }
+  border-radius: 0.5rem;
+  padding-left: 0.5rem; /* text distance from border */
+  margin: 1rem; /* messages distance */
+  height: 5rem;
+    border: 3px solid gray;
+    background: lightgray;
+    position: relative;
+}
+
+.Message:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  width: 0;
+  border-top: 20px solid black;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
   
   .Message.log {
-    color: yellow;
+    color: yellow !important;
   }
   
   .Message .author {
@@ -14,5 +30,18 @@
   }
   
   .Message.me {
-    color: #b6191e;
+    width: 60%;
+    word-wrap: break-word;
+    background-color: lightblue;
+    color: black;
   }
+
+  .Message.other {
+    float: right;
+    width: 60%;
+    word-wrap: break-word;
+    background-color: lightgreen;
+    color: black;
+  }
+
+  

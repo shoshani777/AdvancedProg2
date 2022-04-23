@@ -16,8 +16,8 @@ const chat_db = new Map([
                 },
                 {id:2 , isClicked: false, name:"bob" , image:bobImg , unreadMark: 0, unread: 0, messages:
                     [
-                        {me: true, body: 'hello to bob from ori', type: 'text'},
-                        {me: false, body: 'thank you ori', type: 'text'}
+                        {me: true, body: 'hello to bob from ori', type: 'text', author: 'me'},
+                        {me: false, body: 'thank you ori', type: 'text', author: 'bob'}
                     ]
                 },
                 {id:3 , isClicked: false, name:"alice" , image:aliceImg , unreadMark: 2, unread: 2, messages:

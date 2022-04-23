@@ -7,9 +7,9 @@ class Message extends Component {
   render() {
     var messageClass = 'Message';
     messageClass += this.props.author ? '' : ' log';
-    messageClass += this.props.me ? ' me' : '';
+    messageClass += this.props.me ? ' me' : ' other';
     const authorDisplay = !this.props.me && this.props.group && this.props.author && (
-      <span className="author">{this.props.author}:</span>
+      <span className="author">{this.props.author}</span>
     )
     
     if (this.props.type === 'text') {

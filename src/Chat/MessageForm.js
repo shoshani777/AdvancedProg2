@@ -1,6 +1,5 @@
 import React from 'react'
 import './MessageForm.css'
-import $ from 'jquery';
 
 class MessageForm extends React.Component {
   constructor(props) {
@@ -12,7 +11,7 @@ class MessageForm extends React.Component {
                       placeholder="Enter your message..." onKeyUp={this.typing}/>;
     this.sendText = <button onClick={this.send}>send</button>
     this.recordButton = <button onClick={this.recordAudio}>record</button>;
-    this.deleteAudio = <button onClick={this.removeAudio}>remove</button>;
+    this.deleteAudio = <button className="bi bi-trash" onClick={this.removeAudio}></button>;
     this.stopRecording = <button onClick={this.stopAudio}>stop</button>;
     this.recordingInputArea = "recording..."
     
@@ -20,8 +19,8 @@ class MessageForm extends React.Component {
 
     this.picInputRef = React.createRef();
 
-
-    this.displayImage = <img className='display-image' id='displayImage' src='' alt="couldn't load" width="50" height="40" />
+    this.displayImageRef = React.createRef();
+    this.displayImage = <img className='display-image' ref={this.displayImageRef} id='displayImage' src='' alt="couldn't load" width="50" height="40" />
 
     this.sendImageButton = <button onClick={this.sendPic}>sendImage</button>
     
@@ -59,8 +58,8 @@ class MessageForm extends React.Component {
   }
 
   display = (result) => {
+    this.displayImageRef.current.src = result;
     this.imageToSend = result;
-    $("#displayImage").attr("src", result);
   }
 
   addedFile = () => {
@@ -72,7 +71,7 @@ class MessageForm extends React.Component {
     
     if (file) {
       reader.readAsDataURL(file);
-      this.setState({ // image was chosen
+      this.setState({
         inputArea: this.displayImage,
         rightButton: this.sendImageButton,
         leftButton: this.cancelImageButton
@@ -129,7 +128,9 @@ class MessageForm extends React.Component {
       });
 
       mediaRecorder.addEventListener("stop", () => {
-        this.mediaRecorder.stream.getTracks()[0].stop();
+        this.mediaRecorder.stream.getTracks().forEach((track) => {
+          track.stop();
+        });
         const audioBlob = new Blob(audioChunks);
         const audioUrl = URL.createObjectURL(audioBlob);
         if (this.shouldSend) {

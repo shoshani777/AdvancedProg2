@@ -28,7 +28,23 @@ class Chat extends Component {
     render() {
         return (
           <div>
-            <MessageList messages={this.state.messages} group={this.group} unread={this.props.unread}/>
+            <table border="1" className="userTbl">
+                  <tbody>
+                    <tr>
+                      <td className="imgTd">
+                        <img className="chatImg" src={this.props.image}/>
+                      </td>
+                      <td>
+                        <div>
+                          <p className="nameTxt text-truncate">
+                            {this.props.name}
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            <MessageList messages={this.state.messages} group={this.group} unread={this.props.unread} unreadOnTop={this.props.unreadOnTop}/>
             <MessageForm onMessageSend={this.handleNewMessage} />
           </div>
         )

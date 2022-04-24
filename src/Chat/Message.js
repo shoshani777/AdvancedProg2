@@ -17,6 +17,7 @@ class Message extends Component {
     if (this.props.type === 'text') {
       return (
         <div className={messageClass}>
+          {this.props.icon}
           {authorDisplay}
           {this.props.body}
         </div>

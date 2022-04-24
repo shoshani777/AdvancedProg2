@@ -106,7 +106,7 @@ class WebPage extends Component {
     }
     return (
       <div>
-        <div className="webPageContainer container-fluid overflow-auto">
+        <div className="webPageContainer container-fluid">
           <div className="row">
             <div className="col-1"></div>
             <div className="col-2 col-md-auto groupColumn overflow-auto">
@@ -137,7 +137,7 @@ class WebPage extends Component {
                 </ul>
               </div>
             </div>
-            <div className="col-8">
+            <div className="col-8 Chat">
               {chat}
             </div>
             <div className="col-1 overflow-auto">

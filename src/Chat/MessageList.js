@@ -33,10 +33,12 @@ class MessageList extends Component {
   }
   
   render() {
+    const messages = this.props.messages.slice();
+    const endToEndEnc = " end to end encrypted";
+    messages.splice(0, 0, {type: 'text', body: endToEndEnc, icon: <i class="bi bi-lock-fill"></i>})
     if (this.props.unread > 0) {
-      const messages = this.props.messages.slice();
       var unreadMessage = this.props.unread + ' unread messages';
-      var unreadIndex = Math.max(messages.length - this.props.unread, 0);
+      var unreadIndex = Math.max(messages.length - this.props.unread, 1);
       messages.splice(unreadIndex, 0, {type: 'text', body: unreadMessage})
       const group = this.props.group;
       const unreadMessageRef = this.unreadMessageRef;
@@ -59,7 +61,7 @@ class MessageList extends Component {
     }
     return (
       <div className="MessageList" id='list'>
-        {this.props.messages.map((message, i) => (
+        {messages.map((message, i) => (
           <div className='Wrapper' key={i}>
             <Message {...message} group={this.props.group}/>
           </div>

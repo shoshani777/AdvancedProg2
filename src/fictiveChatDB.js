@@ -8,7 +8,7 @@ const chat_db = new Map([
     ["shoshani777",
         { image:oriImg , groups:
             [
-                {id:1 , isClicked: false, name:"gilad" , image:giladImg , unreadMark: 10, unread: 0, messages:
+                {id:1 , isClicked: false, name:"gilad" , image:giladImg , unreadMark: 10, unread: 10, messages:
                     [
                         {me: true, body: 'hello to gilad from ori', type: 'text',author:'me'},
                         {me: false, body: 'thank you ori thank you ori thank you ori thank you ori', type: 'text',author:'gilad'},

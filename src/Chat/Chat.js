@@ -9,7 +9,7 @@ class Chat extends Component {
       this.group = props.group;
       this.state = {
           messages: props.givenChat,
-          id: props.id,
+          id: props.id
       }
       this.updateFunc = props.updateFunc;
     } 

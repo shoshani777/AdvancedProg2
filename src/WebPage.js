@@ -13,7 +13,7 @@ class WebPage extends Component {
       window.location.href = "/logIn";
     }
     this.state = {
-      ...chat_db.get(props.userName),clickedId:null,userName:props.userName
+      ...chat_db.get(props.userName),clickedId:null,userName:props.userName,unreadOnTop:false
     }
     this.ChangeStateFunc = this.ChangeState.bind(this)
     for (let index = 0; index < this.state.groups.length; index++) {
@@ -27,6 +27,7 @@ class WebPage extends Component {
 
   ChangeState({groupIdToChange,newGroup,newClickedId,groupIdToTop}){
     var newState = this.state
+    newState.unreadOnTop = false
     if(typeof groupIdToTop !== 'undefined'){
       var groupToTop = null
       for (let index = 0; index < newState.groups.length; index++) {
@@ -75,6 +76,11 @@ class WebPage extends Component {
         if(element.isClicked){
           newState.groups[index].unread = 0;
         }
+        if(element.id===newClickedId){
+          if(!element.isClicked){
+            newState.unreadOnTop=true
+          }
+        }
         newState.groups[index].isClicked = (element.id == newClickedId);
       }
     }
@@ -93,7 +99,7 @@ class WebPage extends Component {
         if(element.id===this.state.clickedId){
           chat = <>
           <Chat key={Math.random()} givenChat={element.messages} group={false} unread={element.unread} id={this.state.groups[index].id}
-          updateFunc={this.ChangeStateFunc} name={element.name} image={element.image}/>
+          updateFunc={this.ChangeStateFunc} name={element.name} image={element.image} unreadOnTop={this.state.unreadOnTop}/>
           </>
         }
       }

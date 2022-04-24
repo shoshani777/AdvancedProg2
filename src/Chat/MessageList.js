@@ -17,7 +17,7 @@ class MessageList extends Component {
   }
 
   scroll = () => {
-    if (this.props.unreadOnTop) {
+    if (this.props.unreadOnTop && this.props.unread != 0) {
       this.unreadMessageRef.current.scrollIntoView();
     } else {
       $("#list").scrollTop($("#list")[0].scrollHeight);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MessageList from './MessageList'
 import MessageForm from './MessageForm'
+import './Chat.css'
 
 class Chat extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class Chat extends Component {
     }
     render() {
         return (
-          <div className="Chat">
+          <div>
             <MessageList messages={this.state.messages} group={this.group} unread={this.props.unread}/>
             <MessageForm onMessageSend={this.handleNewMessage} />
           </div>

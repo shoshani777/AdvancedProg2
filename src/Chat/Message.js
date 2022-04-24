@@ -11,7 +11,7 @@ class Message extends Component {
       messageClass += this.props.me? ' me' : ' other';
     }
     const authorDisplay = !this.props.me && this.props.group && this.props.author && (
-      <span className="author">{this.props.author}</span>
+      <div className="author">{this.props.author}</div>
     )
     
     if (this.props.type === 'text') {

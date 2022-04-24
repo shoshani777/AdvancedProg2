@@ -1,6 +1,8 @@
 .MessageList {
+  background-color: black;
     overflow-y: auto;
-    padding: 4px;
+    padding: 1rem 0.5rem 0rem;
+    height: 43rem;
   }
 
   .Wrapper {

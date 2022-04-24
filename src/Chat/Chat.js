@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MessageList from './MessageList'
 import MessageForm from './MessageForm'
+import './Chat.css'
 
 class Chat extends Component {
     constructor(props) {
@@ -14,16 +15,19 @@ class Chat extends Component {
     } 
 
     handleNewMessage = (text, type) => {
+      var changedGroup = null
       if (this.props.unread == 0) {
-        var changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type}]}
+        changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type,author:'me'}]}
       } else {
-        var changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type}], unread: this.props.unread + 1}
+        changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type,author:'me'}], unread: this.props.unread + 1}
       }
-      this.updateFunc({groupIdToChange:this.state.id,newGroup:changedGroup})
+      var allGroupsDiv = document.getElementById('groupsDivId');
+      allGroupsDiv.scrollTop = 0;
+      this.updateFunc({groupIdToChange:this.state.id,newGroup:changedGroup,groupIdToTop:this.state.id})
     }
     render() {
         return (
-          <div className="Chat">
+          <div>
             <MessageList messages={this.state.messages} group={this.group} unread={this.props.unread}/>
             <MessageForm onMessageSend={this.handleNewMessage} />
           </div>

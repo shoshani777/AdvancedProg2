@@ -31,8 +31,8 @@ class WebPage extends Component {
       var groupToTop = null
       for (let index = 0; index < newState.groups.length; index++) {
         const element = newState.groups[index];
-        if(element.id == groupIdToTop){
-          groupIdToTop = element
+        if(element.id === groupIdToTop){
+          groupToTop = element
           newState.groups.splice(index,1)
         }
       }
@@ -92,7 +92,8 @@ class WebPage extends Component {
         const element = this.state.groups[index];
         if(element.id===this.state.clickedId){
           chat = <>
-          <Chat key={Math.random()} givenChat={element.messages} group={false} unread={element.unread} id={this.state.groups[index].id} updateFunc={this.ChangeStateFunc} />
+          <Chat key={Math.random()} givenChat={element.messages} group={false} unread={element.unread} id={this.state.groups[index].id}
+          updateFunc={this.ChangeStateFunc} name={element.name} image={element.image}/>
           </>
         }
       }
@@ -124,7 +125,7 @@ class WebPage extends Component {
                   </tbody>
                 </table>
               </div>
-              <div className="groupDiv">
+              <div id="groupsDivId" className="groupDiv">
                 <ul className="list-group">
                   {list}
                 </ul>

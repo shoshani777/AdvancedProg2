@@ -1,0 +1,18 @@
+.defualtChat{
+  background-color: #c8ffb2;
+  height: 49.2rem;
+}
+.mainTxt{
+  padding-top: 13rem;
+  font-size: 6rem;
+  text-align: center;
+}
+.subTxt{
+  font-size: x-large;
+  text-align: center;
+
+}
+.lastTxt{
+  font-size: 2rem;
+  text-align: center;
+}

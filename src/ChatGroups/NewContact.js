@@ -39,7 +39,7 @@ class NewContact extends Component {
         const input = document.getElementById('ChatNameId')
         if(input.classList.contains("is-valid"))
         {
-            this.addFunc({newGroup:{id:0 , isClicked: false, name:this.state.name , image:$("#displayImage").attr("src") , unreadMark: 0, unread: 0, messages:[]}})
+            this.addFunc({newGroup:{id:0 , isClicked: false, name:this.state.name , image:$("#displayImage").attr("src") ,isgroup:false, unreadMark: 0, unread: 0, messages:[]}})
             $("[data-dismiss=modal]").trigger({ type: "click" });
         }
     }

@@ -5,6 +5,7 @@ import chat_db from "./fictiveChatDB";
 import './bootstrap/dist/css/bootstrap.min.css';
 import NewContact from "./ChatGroups/NewContact";
 import "./WebPage.css";
+import DefualtChat from "./DefualtChat";
 
 class WebPage extends Component {
   constructor(props) {
@@ -92,19 +93,21 @@ class WebPage extends Component {
     for (let index = 0; index < this.state.groups.length; index++) {
       list.push(<li className="list-group-item noMargin" key={Math.random()}><ChatGroup group={{...this.state.groups[index]}} setGroup={this.ChangeStateFunc}/></li>);
     }
-    var chat = <></>;//need defualt chat
+    // var chat=null;
+    var chat = <DefualtChat />;//need defualt chat
     if(this.state.clickedId!==null){
       for (let index = 0; index < this.state.groups.length; index++) {
         const element = this.state.groups[index];
         if(element.id===this.state.clickedId){
           chat = <>
-          <Chat key={Math.random()} givenChat={element.messages} group={false} unread={element.unread} id={this.state.groups[index].id}
+          <Chat key={Math.random()} givenChat={element.messages} group={element.isgroup} unread={element.unread} id={this.state.groups[index].id}
           updateFunc={this.ChangeStateFunc} name={element.name} image={element.image} unreadOnTop={this.state.unreadOnTop}/>
           </>
         }
       }
     }
     return (
+      <>
       <div>
         <div className="webPageContainer container-fluid">
           <div className="row">
@@ -145,6 +148,7 @@ class WebPage extends Component {
           </div>
         </div>
       </div>
+      </>
     )
   }
 }

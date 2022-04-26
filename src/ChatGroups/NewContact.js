@@ -67,7 +67,7 @@ class NewContact extends Component {
     render() {
         const regex = '^[a-zA-Z]';
         const error = 'must begin with a letter';
-        const ChatNameElement = <Input inputSetter={this.setChatNameFunc} checkRegex={regex} type={'text'}
+        const ChatNameElement = <Input inputSetter={this.setChatNameFunc} checkRegex={regex} type={'text'} howShortened={'3'} longInput={true} 
         id={'ChatNameId'} description={'Chat Name'} ref={this.inputRef} eDescription={error}/>;
         return (
           <>

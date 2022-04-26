@@ -95,14 +95,14 @@ class Input extends React.Component{
         
         //const errorLabal = document.getElementById(id + 'error');
         //const inputElement = document.getElementById(id);
-        var shortenedNum=this.props.isShortened?'2':'1';
-
+        var shortenedNum=this.props.howShortened;
+        var max = this.props.longInput?'25':'16';
 
         return (
         <div className="a0marginBtm bigDiv">
             <div className={'inputDiv'+shortenedNum}>
             <input data-lpignore="true" ref={this.input} id={this.id} onKeyUp={this.validate} type={this.type} 
-            className={"form-control inputCls " + this.state.inputClass} onBlur={this.validate} maxLength={'16'}></input>
+            className={"form-control inputCls " + this.state.inputClass} onBlur={this.validate} maxLength={max}></input>
             </div>
             <div id={this.id + 'error'} htmlFor={this.id} className={"text-danger err"+shortenedNum}>{this.state.error}</div>
         </div>

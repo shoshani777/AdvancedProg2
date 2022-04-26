@@ -20,6 +20,15 @@
   margin-top: 0.5vh;
   /* width: 1px; */
 }
+.err3{
+  z-index: 1;
+  position: relative;
+  left:13vw;
+  bottom: 2.3rem;
+  font-size: 0.8vw;
+  margin-top: 0.5vh;
+  /* width: 1px; */
+}
 .inputDiv1{
   /* width:fit-content; */
   width:35vw;
@@ -27,6 +36,10 @@
 .inputDiv2{
   /* width:fit-content; */
   width:33vw;
+}
+.inputDiv3{
+  /* width:fit-content; */
+  width:23vw;
 }
 /* .allButLabel{
 } */

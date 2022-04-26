@@ -57,9 +57,9 @@ class Login extends React.Component {
     const error = 'must begin with a letter'
 
 
-    const uNameElement = <Input inputSetter={this.setUserName} checkRegex={regex} type={'text'} isShortened={false}
+    const uNameElement = <Input inputSetter={this.setUserName} longInput={false} checkRegex={regex} type={'text'} howShortened={'1'}
     id={'uname'} description={'User Name:'} eDescription={error}/>;
-    const passElement = <Input inputSetter={this.setPassword} isShortened={false}
+    const passElement = <Input inputSetter={this.setPassword} howShortened={'1'} longInput={false} 
     checkRegex={regex} type={'password'} id={'password'} description={'Password:'} eDescription={error}/>;
     
     return (

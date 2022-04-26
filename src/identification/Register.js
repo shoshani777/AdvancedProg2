@@ -100,14 +100,14 @@ class Register extends React.Component {
     const confirmPassError = 'must match password'
 
 
-    const uNameElement = <Input inputSetter={this.setUserName} checkRegex={regex} type={'text'} isShortened={true}
+    const uNameElement = <Input inputSetter={this.setUserName} checkRegex={regex} type={'text'} howShortened={'2'} longInput={false}
     id={'uname'} description={'User Name'} eDescription={error}/>;
-    const nNameElement = <Input inputSetter={this.setNickName} checkRegex={regex} type={'text'} isShortened={true}
+    const nNameElement = <Input inputSetter={this.setNickName} checkRegex={regex} type={'text'} howShortened={'2'} longInput={false}
     id={'nname'} description={'Nick Name'} eDescription={error}/>;
-    const cPassElement = <Input inputSetter={this.setConfirmPass} checkRegex={'^' + this.state.password + '$'} type={'password'}
-    id={'cpass'} description={'Confirm Password'} eDescription={confirmPassError} ref={this.cPassRef} isShortened={true}/>;
-    const passElement = <Input inputSetter={this.setPassword} cSetter={this.setConfirmPass} cPassError={confirmPassError}
-    checkRegex={regex} type={'password'} id={'pass'} description={'Password'} eDescription={error} isShortened={true}
+    const cPassElement = <Input inputSetter={this.setConfirmPass} checkRegex={'^' + this.state.password + '$'} type={'password'} longInput={false}
+    id={'cpass'} description={'Confirm Password'} eDescription={confirmPassError} ref={this.cPassRef} howShortened={'2'}/>;
+    const passElement = <Input inputSetter={this.setPassword} cSetter={this.setConfirmPass} cPassError={confirmPassError} longInput={false}
+    checkRegex={regex} type={'password'} id={'pass'} description={'Password'} eDescription={error} howShortened={'2'}
     cPassRef={this.cPassRef}/>;
     return (
       <div className='container'>

@@ -1,9 +1,12 @@
 const users = new Map([
     ['shoshani777', {
-        nickName : 'Ori', password : 'p', picture : null
+        nickName : 'ori', password : 'p'
     }],
     ['gilad517', {
-        nickName : 'gilad', password : 'pass', picture : null
+        nickName : 'gilad', password : 'pass'
+    }],
+    ['student1024', {
+        nickName : 'student', password : 'pass'
     }]
 ])
 export default users;

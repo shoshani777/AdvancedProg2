@@ -172,7 +172,7 @@ class Register extends React.Component {
                     <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
                     <div className='input-divReg'>
                         <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
-                        <button id='addPicBtnId' className="btn btn-primary add-button" onClick={this.addPic}><i class="bi bi-plus-circle"></i></button>
+                        <button id='addPicBtnId' className="btn btn-primary add-button" onClick={this.addPic}><i className="bi bi-plus-circle"></i></button>
                     </div>
                   </td>
                   <td colSpan={'2'}>

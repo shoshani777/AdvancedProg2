@@ -27,7 +27,7 @@ class Chat extends Component {
     }
     render() {
         return (
-          <div>
+          <div className='chatContainer'>
             <table border="1" className="userTbl">
                   <tbody>
                     <tr>

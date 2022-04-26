@@ -28,7 +28,7 @@ class Chat extends Component {
     render() {
         return (
           <div className='chatContainer'>
-            <table border="1" className="userTbl">
+            <table border="0" className="userTbl">
                   <tbody>
                     <tr>
                       <td className="imgTd">

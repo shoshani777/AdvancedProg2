@@ -114,7 +114,7 @@ class WebPage extends Component {
             <div className="col-1"></div>
             <div className="col-2 col-md-auto groupColumn overflow-auto">
               <div>
-                <table border="1" className="userTbl">
+                <table border="0" className="userTbl">
                   <tbody>
                     <tr>
                       <td className="imgTd">

@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import './Message.css'
+import peopleToColor from './peopleToColor';
 
 class Message extends Component {
   
+  randomColor = () => {
+    var result = Math.floor(Math.random() * 16); // random between 0-15 (include)
+    for (var i = 0; i < 5; i++) {
+      result = result << 4;
+      result += Math.floor(Math.random() * 16);
+    } // result now contains a random color
+    const colorWithoutGreen = parseInt('FF00FF', 16);
+    result = result & colorWithoutGreen; // remove the green color from result
+    return result.toString(16);
+  }
 
   render() {
     var messageClass = 'Message';
@@ -10,8 +21,16 @@ class Message extends Component {
     if (this.props.author) {
       messageClass += this.props.me? ' me' : ' other';
     }
+    var color;
+    if (peopleToColor.has(this.props.author)) {
+      color = peopleToColor.get(this.props.author);
+    }
+    else {
+      color = this.randomColor();
+      peopleToColor.set(this.props.author, color);
+    }
     const authorDisplay = !this.props.me && this.props.group && this.props.author && (
-      <div className="author">{this.props.author}</div>
+      <div className="author" style={{color:'#' + color}}>{this.props.author}</div>
     )
     
     if (this.props.type === 'text') {

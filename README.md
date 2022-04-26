@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+### `Run the project:`
+1. Clone the project to the wanted path
+2. Create another react app (with the "npx create-react-app (name)" command
+3. Copy the "node_modules" folder to the cloned project (couldn't upload to github because of memory size)
+4. Navigate back to the cloned project
+5. Activate the next commands: 1. (npm install bootstrap) 2. (npm i jquery) 3. (npm i bootstrap-icons), those are the packages (bootstrap, bootstrap icons, jquery)
+6. Write "npm start"
+7. Open google chrome and navigate (in the url) to "http://localhost:3000"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### `Existing users:`
+1. user name: , password: 
+2. user name: , password: 
+3. user name: , password: 
 
-In the project directory, you can run:
 
-### `npm start`
+### `Features:`
+1. Login and registration pages with midtype confirmation and validation
+2. Add chat to user
+3. Responsive chat list, when sending a message the current chat will top, unread feature, last message sent in chat and more...
+4. Chat with voice records, images and text supported messages
+5. Support in group chats (not in creation, but an example is set)
+6. Project is written in react framework, which also means all data remain until refresh!
+7. And more to discover...
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### `How?`
+The App component navigates you on first enterance (hence on refresh also) based on the url, then based on buttons and link pressed between 3 main components:
+1. Login: designed login page with basic login logic and some features mentioned above
+2. Register: designed registration page with basic registration logic and some features mentioned above
+3. WebPage: the heart, the WebPage component contains the chats list and the chat (components as well) for each uniqe user

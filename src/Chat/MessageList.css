@@ -2,7 +2,7 @@
     background-image: url("../images/defualtChatBg.jpg");
     overflow-y: auto;
     padding: 1rem 0.5rem 0rem;
-    height: 43.2rem;
+    height: calc(74.5vh - 28px);
   }
 
   .Wrapper {

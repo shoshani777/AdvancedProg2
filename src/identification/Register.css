@@ -1,7 +1,8 @@
 .signImgReg{
-  width:7vw;
+  float: right;
+  width: 9rem;
   position: relative;
-  left:4vw;
+  right: 10vw;
 }
 .logInTbl{
   margin: auto;
@@ -14,7 +15,9 @@
 .transperantBorderReg{
   /* border-color: black; */
   border-color: aliceblue;
-
+}
+#addPicBtnId{
+  margin-right: 0;
 }
 .trHead{
   height: 6rem;
@@ -76,6 +79,10 @@
   font-weight: bold;
   color: #dc3545;
 }
+#errorReg{
+  text-align: left;
+  padding-left: 4vw;
+}
 .uNameP{
   position: relative;
   left:1.2rem;
@@ -84,4 +91,8 @@
   position: relative;
   left:1.8rem;
 
+}
+.input-divReg{
+  text-align: center;
+  padding-left: 34px;
 }

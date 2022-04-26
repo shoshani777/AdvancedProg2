@@ -1,5 +1,8 @@
 .signImg{
-  width:7vw;
+  width: 9rem;
+  float: right;
+  position: relative;
+  right: 13vw;
 }
 .logInTbl{
   margin: auto;

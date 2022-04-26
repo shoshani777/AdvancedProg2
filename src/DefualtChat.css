@@ -1,6 +1,7 @@
 .defualtChat{
   background-color: #c8ffb2;
-  height: 49.2rem;
+  height: calc(74.5vh + 4.1rem);
+  width: calc(0.795 * (100vw - 371px));
 }
 .mainTxt{
   padding-top: 13rem;

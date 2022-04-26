@@ -24,7 +24,7 @@ class ChatGroup extends Component {
     }
     render() {
       //future logic to get the last message
-      var lastmsg = "";
+      var lastmsg = "",lastmsgIcon=<></>;
       if(this.state.messages.length > 0){
         var last = this.state.messages[this.state.messages.length-1]
         if(!last.me){
@@ -32,8 +32,10 @@ class ChatGroup extends Component {
         }
         if(last.type==="img"){
           lastmsg+="image"
+          lastmsgIcon=<i className="bi bi-file-earmark-image-fill icn"></i>
         } else if(last.type==="audio"){
           lastmsg+="recording"
+          lastmsgIcon=<i className="bi bi-soundwave icn"></i>
         } else if(last.type==="text"){
           lastmsg+=last.body
         }
@@ -68,7 +70,7 @@ class ChatGroup extends Component {
                       </tr>
                       <tr className='subtitles'>
                         <td>
-                          <p className='card-subtitle lastmsg text-truncate'>{lastmsg}</p>
+                          <p className='card-subtitle lastmsg text-truncate'>{lastmsgIcon}{lastmsg}</p>
                         </td>
                       </tr>
                     </tbody>

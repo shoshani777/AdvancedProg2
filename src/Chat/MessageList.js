@@ -35,7 +35,7 @@ class MessageList extends Component {
   render() {
     const messages = this.props.messages.slice();
     const endToEndEnc = " end to end encryption";
-    messages.splice(0, 0, {type: 'text', body: endToEndEnc, icon: <i class="bi bi-lock-fill"></i>})
+    messages.splice(0, 0, {type: 'text', body: endToEndEnc, icon: <i className="bi bi-lock-fill"></i>})
     if (this.props.unread > 0) {
       var unreadMessage = this.props.unread>99 ? '99+ unread messages':this.props.unread + ' unread messages';
       var unreadIndex = Math.max(messages.length - this.props.unread, 1);

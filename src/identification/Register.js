@@ -169,8 +169,16 @@ class Register extends React.Component {
                     </td>
                   </tr>
                   <tr className='errorTr transperantBorderReg'>
-                    <td colSpan={'4'}>
-                      <div className='errorTxt'>{this.state.error}</div>
+                    <td></td>
+                    <td>
+                      <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
+                      <div className='input-divReg'>
+                          <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
+                          <button id='addPicBtnId' className="btn btn-primary add-button" onClick={this.addPic}><i class="bi bi-plus-circle"></i></button>
+                      </div>
+                    </td>
+                    <td colSpan={'2'}>
+                      <div id='errorReg' className='errorTxt'>{this.state.error}</div>
                     </td>
                   </tr>
                   <tr className='transperantBorderReg'>
@@ -190,12 +198,12 @@ class Register extends React.Component {
             </form>
           </div>
           
-      <div className="mb-3">
+      {/* <div className="mb-3">
       <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
       <img className='display-image' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
       <button onClick={this.addPic}>add pic</button>
-      </div>
-
+      </div> */}
+      
 
       </div>
     );

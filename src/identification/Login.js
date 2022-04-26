@@ -52,7 +52,6 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log("refresh");
     const regex = '^[a-zA-Z]';
     const error = 'must begin with a letter'
 

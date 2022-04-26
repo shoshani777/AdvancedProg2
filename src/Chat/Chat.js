@@ -28,7 +28,8 @@ class Chat extends Component {
     render() {
         return (
           <div className='chatContainer'>
-            <table border="0" className="userTbl">
+            <div className='table-container'>
+            <table border="0" className="chat-tbl">
                   <tbody>
                     <tr>
                       <td className="imgTd">
@@ -36,7 +37,7 @@ class Chat extends Component {
                       </td>
                       <td>
                         <div>
-                          <p className="nameTxt text-truncate">
+                          <p className="chat-name text-truncate">
                             {this.props.name}
                           </p>
                         </div>
@@ -44,6 +45,7 @@ class Chat extends Component {
                     </tr>
                   </tbody>
                 </table>
+                </div>
             <MessageList messages={this.state.messages} group={this.group} unread={this.props.unread} unreadOnTop={this.props.unreadOnTop}/>
             <MessageForm onMessageSend={this.handleNewMessage} />
           </div>

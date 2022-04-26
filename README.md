@@ -9,9 +9,9 @@
 
 
 ### `Existing users:`
-1. user name: , password: 
-2. user name: , password: 
-3. user name: , password: 
+1. user name: shoshani777 , password: ori123321
+2. user name: gilad517 , password: gilad123321
+3. user name: student1024 , password: student123321
 
 
 ### `Features:`

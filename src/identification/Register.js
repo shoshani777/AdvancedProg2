@@ -8,6 +8,8 @@ import nameToLink from '../nameToLink';
 import defualtImg from "../images/defualtChat.jpg";
 import $ from 'jquery';
 import chat_db from '../fictiveChatDB';
+import signImg from '../images/SignIn.png';
+import './Register.css';
 
 
 class Register extends React.Component {
@@ -15,7 +17,7 @@ class Register extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userName : 0, nickName : 0, password : 0, confirmPass : 0, image: defualtImg
+      userName : 0, nickName : 0, password : 0, confirmPass : 0, image: defualtImg,error:''
     };
     this.cPassRef = React.createRef();
     this.setUserName = this.setUserName.bind(this);
@@ -55,8 +57,10 @@ class Register extends React.Component {
 
   register() {
     if (!(this.state.userName && this.state.nickName && this.state.password &&
-      this.state.confirmPass))
-      return;
+      this.state.confirmPass)){
+        this.setState({error:'Please fill out the required information'});
+        return;
+      }
     const uName = this.state.userName;
     if (!users.has(uName)) {
       users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: this.state.image});
@@ -65,7 +69,7 @@ class Register extends React.Component {
       this.setPage(nameToLink.get('webPage'));
     }
     else {
-      console.log('user name already exist');
+      this.setState({error:'User name already exists'});
     }
   }
 
@@ -96,30 +100,103 @@ class Register extends React.Component {
     const confirmPassError = 'must match password'
 
 
-    const uNameElement = <Input inputSetter={this.setUserName} checkRegex={regex} type={'text'}
+    const uNameElement = <Input inputSetter={this.setUserName} checkRegex={regex} type={'text'} isShortened={true}
     id={'uname'} description={'User Name'} eDescription={error}/>;
-    const nNameElement = <Input inputSetter={this.setNickName} checkRegex={regex} type={'text'}
+    const nNameElement = <Input inputSetter={this.setNickName} checkRegex={regex} type={'text'} isShortened={true}
     id={'nname'} description={'Nick Name'} eDescription={error}/>;
     const cPassElement = <Input inputSetter={this.setConfirmPass} checkRegex={'^' + this.state.password + '$'} type={'password'}
-    id={'cpass'} description={'Confirm Password'} eDescription={confirmPassError} ref={this.cPassRef}/>;
+    id={'cpass'} description={'Confirm Password'} eDescription={confirmPassError} ref={this.cPassRef} isShortened={true}/>;
     const passElement = <Input inputSetter={this.setPassword} cSetter={this.setConfirmPass} cPassError={confirmPassError}
-    checkRegex={regex} type={'password'} id={'pass'} description={'Password'} eDescription={error}
+    checkRegex={regex} type={'password'} id={'pass'} description={'Password'} eDescription={error} isShortened={true}
     cPassRef={this.cPassRef}/>;
     return (
       <div className='container'>
-          {uNameElement}
-          {nNameElement}
-          {passElement}
-          {cPassElement}
-          <div className="mb-3">
-          <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
-          <img className='display-image' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
-          <button onClick={this.addPic}>add pic</button>
+          <div className='logInDiv'>
+            <form>
+              <table border="1" className='logInTbl'>
+                <tbody>
+                  <tr className='transperantBorderReg trHead'>
+                    <td className='gap'></td>
+                    <td colSpan={'3'}>
+                        <p className='logInHeader a0marginBtm'>Register</p>
+                    </td>
+                    <td className='gap'></td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td className='uNameDescriptionTd'>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                        <p className='a0marginBtm uNameP'>User Name:</p>
+                      </span>
+                    </td>
+                    <td className='uNameTd'  colSpan={'2'}>
+                      {uNameElement}
+                    </td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td className='nNameDescriptionTd'>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                        <p className='a0marginBtm uNameP'>Nick Name:</p>
+                      </span>
+                    </td>
+                    <td className='nNameTd'  colSpan={'2'}>
+                      {nNameElement}
+                    </td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                        <p className='a0marginBtm paswordP'>Password:</p>
+                      </span>
+                    </td>
+                    <td colSpan={'2'}>
+                    {passElement}
+                    </td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">Confirm Password:</span>
+                    </td>
+                    <td colSpan={'2'}>
+                    {cPassElement}
+                    </td>
+                  </tr>
+                  <tr className='errorTr transperantBorderReg'>
+                    <td colSpan={'4'}>
+                      <div className='errorTxt'>{this.state.error}</div>
+                    </td>
+                  </tr>
+                  <tr className='transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td colSpan={'2'} className='vw12'>
+                      <Link to={(this.state.userName && this.state.nickName && this.state.password &&
+                      this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : ''} 
+                        className="btn btn-primary" id="register" onClick={this.register} ><p className='pRegister'>Register</p></Link>
+                    </td>
+                    <td>
+                      <Link to={'/logIn'}><img className='signImgReg' src={signImg}></img></Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
           </div>
+          
+      <div className="mb-3">
+      <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
+      <img className='display-image' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
+      <button onClick={this.addPic}>add pic</button>
+      </div>
 
-          <Link to={(this.state.userName && this.state.nickName && this.state.password &&
-           this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : ''} 
-            className="btn btn-primary" onClick={this.register} >register</Link>
+
       </div>
     );
   }

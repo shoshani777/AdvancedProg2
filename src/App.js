@@ -63,7 +63,7 @@ class App extends React.Component {
       <>
       <BackGround css={this.state.page.bg}/>
       <BrowserRouter>
-      <Link className={this.state.page.exitCss} to={linkTo} onClick={()=>{this.setPage(nameToLink.get(this.state.page.linkTo))}} >{this.state.page.strLinkTo} </Link>
+      <Link className={this.state.page.exitCss} to={linkTo} onClick={()=>{this.setPage(nameToLink.get(this.state.page.linkTo))}} hidden={this.state.page.name!=='webPage'} >{this.state.page.strLinkTo} </Link>
       <Routes>
         <Route path='' element={LoginElement}></Route>
         <Route path='/register' element={RegisterElement}></Route>

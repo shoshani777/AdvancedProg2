@@ -1,4 +1,7 @@
 import React from "react";
+import {Link} from "react-router-dom";
+import './Input.css';
+
 class Input extends React.Component{
     
     constructor(props) {
@@ -92,15 +95,16 @@ class Input extends React.Component{
         
         //const errorLabal = document.getElementById(id + 'error');
         //const inputElement = document.getElementById(id);
+        var shortenedNum=this.props.isShortened?'2':'1';
 
 
         return (
-        <div className="input-group input-group-sm mb-3">
-            <span className="input-group-text" id="inputGroup-sizing-sm">{this.description}</span>
+        <div className="a0marginBtm bigDiv">
+            <div className={'inputDiv'+shortenedNum}>
             <input data-lpignore="true" ref={this.input} id={this.id} onKeyUp={this.validate} type={this.type} 
-            className={"form-control " + this.state.inputClass} onBlur={this.validate}></input>
-            <span className="col-sm-1"></span>
-            <label id={this.id + 'error'} htmlFor={this.id} className="text-danger">{this.state.error}</label>
+            className={"form-control inputCls " + this.state.inputClass} onBlur={this.validate} maxLength={'16'}></input>
+            </div>
+            <div id={this.id + 'error'} htmlFor={this.id} className={"text-danger err"+shortenedNum}>{this.state.error}</div>
         </div>
         );
     }

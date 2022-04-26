@@ -30,7 +30,6 @@ class Register extends React.Component {
     this.picInputRef = React.createRef();
   }
 
-
   addPic = (event) => {
     this.picInputRef.current.click();
  }
@@ -112,90 +111,88 @@ class Register extends React.Component {
     return (
       <div className='container'>
           <div className='logInDiv'>
-            <form>
-              <table border="1" className='logInTbl'>
-                <tbody>
-                  <tr className='transperantBorderReg trHead'>
-                    <td className='gap'></td>
-                    <td colSpan={'3'}>
-                        <p className='logInHeader a0marginBtm'>Register</p>
-                    </td>
-                    <td className='gap'></td>
-                  </tr>
-                  <tr className='TrReg transperantBorderReg'>
-                    <td>
-                    </td>
-                    <td className='uNameDescriptionTd'>
-                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
-                        <p className='a0marginBtm uNameP'>User Name:</p>
-                      </span>
-                    </td>
-                    <td className='uNameTd'  colSpan={'2'}>
-                      {uNameElement}
-                    </td>
-                  </tr>
-                  <tr className='TrReg transperantBorderReg'>
-                    <td>
-                    </td>
-                    <td className='nNameDescriptionTd'>
-                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
-                        <p className='a0marginBtm uNameP'>Nick Name:</p>
-                      </span>
-                    </td>
-                    <td className='nNameTd'  colSpan={'2'}>
-                      {nNameElement}
-                    </td>
-                  </tr>
-                  <tr className='TrReg transperantBorderReg'>
-                    <td>
-                    </td>
-                    <td>
-                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
-                        <p className='a0marginBtm paswordP'>Password:</p>
-                      </span>
-                    </td>
-                    <td colSpan={'2'}>
-                    {passElement}
-                    </td>
-                  </tr>
-                  <tr className='TrReg transperantBorderReg'>
-                    <td>
-                    </td>
-                    <td>
-                      <span className="input-group-text spn" id="inputGroup-sizing-sm">Confirm Password:</span>
-                    </td>
-                    <td colSpan={'2'}>
-                    {cPassElement}
-                    </td>
-                  </tr>
-                  <tr className='errorTr transperantBorderReg'>
-                    <td></td>
-                    <td>
-                      <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
-                      <div className='input-divReg'>
-                          <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
-                          <button id='addPicBtnId' className="btn btn-primary add-button" onClick={this.addPic}><i class="bi bi-plus-circle"></i></button>
-                      </div>
-                    </td>
-                    <td colSpan={'2'}>
-                      <div id='errorReg' className='errorTxt'>{this.state.error}</div>
-                    </td>
-                  </tr>
-                  <tr className='transperantBorderReg'>
-                    <td>
-                    </td>
-                    <td colSpan={'2'} className='vw12'>
-                      <Link to={(this.state.userName && this.state.nickName && this.state.password &&
-                      this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : ''} 
-                        className="btn btn-primary" id="register" onClick={this.register} ><p className='pRegister'>Register</p></Link>
-                    </td>
-                    <td>
-                      <Link to={'/logIn'}><img className='signImgReg' src={signImg}></img></Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
+            <table border="1" className='logInTbl'>
+              <tbody>
+                <tr className='transperantBorderReg trHead'>
+                  <td className='gap'></td>
+                  <td colSpan={'3'}>
+                      <p className='logInHeader a0marginBtm'>Register</p>
+                  </td>
+                  <td className='gap'></td>
+                </tr>
+                <tr className='TrReg transperantBorderReg'>
+                  <td>
+                  </td>
+                  <td className='uNameDescriptionTd'>
+                    <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                      <p className='a0marginBtm uNameP'>User Name:</p>
+                    </span>
+                  </td>
+                  <td className='uNameTd'  colSpan={'2'}>
+                    {uNameElement}
+                  </td>
+                </tr>
+                <tr className='TrReg transperantBorderReg'>
+                  <td>
+                  </td>
+                  <td className='nNameDescriptionTd'>
+                    <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                      <p className='a0marginBtm uNameP'>Nick Name:</p>
+                    </span>
+                  </td>
+                  <td className='nNameTd'  colSpan={'2'}>
+                    {nNameElement}
+                  </td>
+                </tr>
+                <tr className='TrReg transperantBorderReg'>
+                  <td>
+                  </td>
+                  <td>
+                    <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                      <p className='a0marginBtm paswordP'>Password:</p>
+                    </span>
+                  </td>
+                  <td colSpan={'2'}>
+                  {passElement}
+                  </td>
+                </tr>
+                <tr className='TrReg transperantBorderReg'>
+                  <td>
+                  </td>
+                  <td>
+                    <span className="input-group-text spn" id="inputGroup-sizing-sm">Confirm Password:</span>
+                  </td>
+                  <td colSpan={'2'}>
+                  {cPassElement}
+                  </td>
+                </tr>
+                <tr className='errorTr transperantBorderReg'>
+                  <td></td>
+                  <td>
+                    <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
+                    <div className='input-divReg'>
+                        <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
+                        <button id='addPicBtnId' className="btn btn-primary add-button" onClick={this.addPic}><i class="bi bi-plus-circle"></i></button>
+                    </div>
+                  </td>
+                  <td colSpan={'2'}>
+                    <div id='errorReg' className='errorTxt'>{this.state.error}</div>
+                  </td>
+                </tr>
+                <tr className='transperantBorderReg'>
+                  <td>
+                  </td>
+                  <td colSpan={'2'} className='vw12'>
+                    <Link to={(this.state.userName && this.state.nickName && this.state.password &&
+                    this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : ''} 
+                      className="btn btn-primary" id="register" onClick={this.register} ><p className='pRegister'>Register</p></Link>
+                  </td>
+                  <td>
+                    <Link to={'/logIn'}><img className='signImgReg' src={signImg}></img></Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           
       {/* <div className="mb-3">

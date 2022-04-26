@@ -90,8 +90,10 @@ class NewContact extends Component {
                 <div className="modal-body">
                     {ChatNameElement}
                     <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
-                    <img className='display-image' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
-                    <button onClick={this.addPic}>add pic</button>
+                    <div className='input-div'>
+                        <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
+                        <button className="btn btn-primary add-button" onClick={this.addPic}><i class="bi bi-plus-circle"></i></button>
+                    </div>
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

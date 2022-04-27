@@ -16,10 +16,10 @@ class Chat extends Component {
 
     handleNewMessage = (text, type) => {
       var changedGroup = null
-      if (this.props.unread == 0) {
-        changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type,author:'me'}]}
+      if (this.props.unread === 0) {
+        changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type,author:'me',date:new Date()}]}
       } else {
-        changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type,author:'me'}], unread: this.props.unread + 1}
+        changedGroup = {messages:[...this.state.messages,{me: true, body: text, type: type,author:'me',date:new Date()}], unread: this.props.unread + 1}
       }
       var allGroupsDiv = document.getElementById('groupsDivId');
       allGroupsDiv.scrollTop = 0;
@@ -33,7 +33,7 @@ class Chat extends Component {
                   <tbody>
                     <tr>
                       <td className="imgTd">
-                        <img className="chatImg" src={this.props.image}/>
+                        <img className="chatImg" alt={"couldn't load"} src={this.props.image}/>
                       </td>
                       <td>
                         <div>

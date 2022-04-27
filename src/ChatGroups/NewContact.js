@@ -9,10 +9,11 @@ class NewContact extends Component {
     constructor(props) {
       super(props);
       this.state={
-        name:null
+        name:'',error:''
       }
       this.addFunc = props.AddingFunc;
       this.setChatNameFunc = this.setChatName.bind(this);
+      this.checkGroupNameFunc = props.checkGroupName;
       this.inputRef = React.createRef();
       this.picInputRef = React.createRef();
     }
@@ -37,8 +38,17 @@ class NewContact extends Component {
     }
     handleClickFunc=()=>{
         const input = document.getElementById('ChatNameId')
+        if(this.state.name===''){
+            this.setState({error: "Please enter a group name"});
+            return;
+        }
+        if(!this.checkGroupNameFunc({nameToCheck:this.state.name})){
+            this.setState({error: "Group name already taken"});
+            return;
+        }
         if(input.classList.contains("is-valid"))
         {
+            this.setState({error: ""});
             this.addFunc({newGroup:{id:0 , isClicked: false, name:this.state.name , image:$("#displayImage").attr("src") ,isgroup:false, unreadMark: 0, unread: 0, messages:[]}})
             $("[data-dismiss=modal]").trigger({ type: "click" });
         }
@@ -52,8 +62,11 @@ class NewContact extends Component {
         $("#displayImage").attr("src", result);
     }
     
+    resetErr=()=>{
+        this.setState({error:''})
+    }
+
     addedFile = () => {
-    
         const file = this.picInputRef.current.files[0];
         const reader = new FileReader();
     
@@ -94,9 +107,11 @@ class NewContact extends Component {
                         <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
                         <button className="btn btn-primary add-button" onClick={this.addPic}><i className="bi bi-plus-circle"></i></button>
                     </div>
+                    <div className='errorTxt errorTxtDivAtModal'>{this.state.error}</div>
+
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.resetErr}>Close</button>
                     <button type="button" className="btn btn-outline-success" onClick={this.handleClickFunc}>Add</button>
                 </div>
                 </div>

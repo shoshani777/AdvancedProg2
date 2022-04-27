@@ -7,6 +7,10 @@
     size:2.5rem;
 }
 
+.errorTxtDivAtModal{
+  width:100%;
+  height: 29px;
+}
 
 .chatImg{
     border-radius: 100%;

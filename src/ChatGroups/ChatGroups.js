@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import MessageList from '../Chat/MessageList'
-import MessageForm from '../Chat/MessageForm'
 import '../bootstrap/dist/css/bootstrap.min.css';
 import "./ChatGroups.css";
 
@@ -39,6 +37,28 @@ class ChatGroup extends Component {
         } else if(last.type==="text"){
           lastmsg+=last.body
         }
+        var lastDate = new Date(last.date),now=new Date();
+        var lastMsgTime = '';
+        if(typeof last.date !== 'undefined'){
+          if(lastDate.toLocaleDateString()===now.toLocaleDateString()){
+            //today
+            var hours = lastDate.getHours()<10?"0"+lastDate.getHours():lastDate.getHours();
+            var minutes = lastDate.getMinutes()<10?"0"+lastDate.getMinutes():lastDate.getMinutes();
+            lastMsgTime = hours+":"+minutes;
+          }
+          else {
+            lastDate.setHours(10,0,0);
+            now.setHours(10,0,0);
+            var elapsed = now.getTime()-lastDate.getTime();
+            if(elapsed<(1000*3600*24+10000)&&elapsed>(1000*3600*24-10000)){
+              lastMsgTime = 'Yesterday';
+            }
+            else{
+              const monthNames = ["Jan. ", "Feb. ", "Mar. ", "Apr. ", "May. ", "Jun. ","Jul. ", "Aug. ", "Sep. ", "Oct. ", "Nov. r", "Dec. "];
+              lastMsgTime = monthNames[last.date.getMonth()]+last.date.getDay()
+            }
+          }
+        }
       }
 
       var unreadMsg = <></>;
@@ -61,15 +81,24 @@ class ChatGroup extends Component {
                   <table border = "0" className='smalltbl'>
                     <tbody>
                       <tr className='headln'>
-                        <td>
+                        <td rowSpan={'2'}>
                           <p className="card-title groupname">{this.state.name}</p>
                         </td>
-                        <td className='unreadTd'>
+                        <td colSpan={'2'}>
+                          <p className='lastMsgTime'>{lastMsgTime}</p>
+                            
+                        </td>
+                      </tr>
+                      <tr className='middleTr'>
+                        <td className='emptyTd'>
+                          
+                        </td>
+                        <td className='unreadTd' rowSpan={'2'}>
                           {unreadMsg}
                         </td>
                       </tr>
                       <tr className='subtitles'>
-                        <td>
+                        <td  colSpan={'2'}>
                           <p className='card-subtitle lastmsg text-truncate'>{lastmsgIcon}{lastmsg}</p>
                         </td>
                       </tr>

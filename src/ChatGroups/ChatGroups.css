@@ -1,6 +1,6 @@
 .group{
     width: 22rem;
-    height: 4.7em;
+    height: 75px;
     padding: 0;
     border: 0;
 }
@@ -32,15 +32,16 @@
     text-align: start;
 }
 .headln{
-    height:60%;
+    height:37px;
     font-size: 1.45rem;
 }
 .subtitles{
-    height:40%;
+    height:30px;
     font-size: large;
 }
 .smalltbl{
-    width: 100%;
+    /* width: 100%; */
+    width:278px;
     height: 100%;
 }
 .lastmsg{
@@ -51,7 +52,8 @@
     padding-inline-start: 8%;
 }
 .unreadTd{
-    width: 13%
+    width: 36px;
+    height: 38px;
 }
 .unreadDiv{
     background-color: rgb(41, 219, 41);
@@ -61,4 +63,15 @@
     color: white;
     width:95%;
     margin-top: 20%;
+}
+.lastMsgTime{
+    font-size: 12px;
+    float: right;
+    font-weight: bold;
+}
+.emptyTd{
+    width:22px;
+}
+.middleTr{
+    height: 8px;
 }

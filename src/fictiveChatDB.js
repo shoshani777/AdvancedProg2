@@ -3,7 +3,6 @@ import giladImg from "./images/gilad.jpg";
 import bobImg from "./images/bob.jpg";
 import aliceImg from "./images/alice.jpg";
 import hemiImg from "./images/hemi.png";
-import defualtImg from './images/defualtChat.jpg';
 import rickRoll from './images/rickRoll.mp3';
 import longCoolImg from "./images/LongCoolImage"; 
 import long100Img from "./images/Long100Image";
@@ -23,7 +22,7 @@ const chat_db = new Map([
                         {me: false, body: 'Look! The new lecture was just uploaded to moodle in mp3 format!', type: 'text',author:'gilad'},
                         {me: false, body: rickRoll, type: 'audio',author:'gilad'},
                         {me: true, body: "You rick rolled me!", type: 'text',author:'me'},
-                        {me: true, body: longCoolImg, type: 'img',author:'me'}
+                        {me: true, body: longCoolImg, type: 'img',author:'me',date:new Date("April 28, 2022 00:03:30")}
                     ]
                 },
                 {id:2 , isClicked: false, name:"bob" , image:bobImg ,isgroup:false, unreadMark: 0, unread: 0, messages:
@@ -34,7 +33,7 @@ const chat_db = new Map([
                         {me: false, body: 'Look! The new lecture was just uploaded to moodle in mp3 format!', type: 'text',author:'bob'},
                         {me: false, body: rickRoll, type: 'audio',author:'bob'},
                         {me: true, body: "You rick rolled me!", type: 'text',author:'me'},
-                        {me: true, body: longCoolImg, type: 'img',author:'me'}
+                        {me: true, body: longCoolImg, type: 'img',author:'me',date:new Date("April 27, 2022 23:15:30")}
                     ]
                 },
                 {id:3 , isClicked: false, name:"alice" , image:aliceImg ,isgroup:false, unreadMark: 7, unread: 7, messages:
@@ -45,7 +44,7 @@ const chat_db = new Map([
                         {me: false, body: 'Look! The new lecture was just uploaded to moodle in mp3 format!', type: 'text',author:'alice'},
                         {me: false, body: rickRoll, type: 'audio',author:'alice'},
                         {me: true, body: "You rick rolled me!", type: 'text',author:'me'},
-                        {me: true, body: longCoolImg, type: 'img',author:'me'}
+                        {me: true, body: longCoolImg, type: 'img',author:'me',date:new Date("April 27, 2021 23:15:30")}
                     ]
                 },
                 {id:4 , isClicked: false, name:"hemi" , image:hemiImg ,isgroup:false, unreadMark: 8, unread: 8, messages:

@@ -16,7 +16,8 @@ class WebPage extends Component {
     this.state = {
       ...chat_db.get(props.userName),clickedId:null,userName:props.userName,unreadOnTop:false
     }
-    this.ChangeStateFunc = this.ChangeState.bind(this)
+    this.ChangeStateFunc = this.ChangeState.bind(this);
+    this.checkGroupNameFunc = this.checkGroupName.bind(this);
     for (let index = 0; index < this.state.groups.length; index++) {
       const element = this.state.groups[index];
       if(element.isClicked){
@@ -24,6 +25,16 @@ class WebPage extends Component {
       }
       element.isClicked = false;
     }
+  }
+
+  checkGroupName({nameToCheck}){
+    for (let index = 0; index < this.state.groups.length; index++) {
+      const element = this.state.groups[index];
+      if(element.name===nameToCheck){
+        return false;
+      }
+    }
+    return true;
   }
 
   ChangeState({groupIdToChange,newGroup,newClickedId,groupIdToTop}){
@@ -41,13 +52,11 @@ class WebPage extends Component {
       newState.groups.unshift(groupToTop)
     }
     if(typeof groupIdToChange !== 'undefined'){
-      var prevGroup = null
       var gruopPlace = null
       for (let index = 0; index < newState.groups.length; index++) {
         const element = newState.groups[index];
-        if(element.id == groupIdToChange){
+        if(element.id === groupIdToChange){
           gruopPlace = index
-          prevGroup = element
         }
       }
       newState.groups[gruopPlace] = {...newState.groups[gruopPlace],...newGroup}
@@ -67,7 +76,7 @@ class WebPage extends Component {
         if(element.isClicked){
           newState.groups[index].unread = 0;
         }
-        newState.groups[index].isClicked = (element.id == maxId+1);
+        newState.groups[index].isClicked = (element.id === maxId+1);
       }
     }
     if(typeof newClickedId !== 'undefined'){
@@ -82,7 +91,7 @@ class WebPage extends Component {
             newState.unreadOnTop=true
           }
         }
-        newState.groups[index].isClicked = (element.id == newClickedId);
+        newState.groups[index].isClicked = (element.id === newClickedId);
       }
     }
     this.setState({...newState });
@@ -118,7 +127,7 @@ class WebPage extends Component {
                   <tbody>
                     <tr>
                       <td className="imgTd">
-                        <img className="userImg" src={this.state.image}/>
+                        <img className="userImg" alt={"couldn't load"} src={this.state.image}/>
                       </td>
                       <td>
                         <div>
@@ -128,7 +137,7 @@ class WebPage extends Component {
                         </div>
                       </td>
                       <td className="newContactTd">
-                        <NewContact AddingFunc={this.ChangeStateFunc}/>
+                        <NewContact AddingFunc={this.ChangeStateFunc} checkGroupName={this.checkGroupNameFunc}/>
                       </td>
                     </tr>
                   </tbody>

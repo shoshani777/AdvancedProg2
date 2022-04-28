@@ -55,7 +55,7 @@ class ChatGroup extends Component {
             }
             else{
               const monthNames = ["Jan. ", "Feb. ", "Mar. ", "Apr. ", "May. ", "Jun. ","Jul. ", "Aug. ", "Sep. ", "Oct. ", "Nov. r", "Dec. "];
-              lastMsgTime = monthNames[last.date.getMonth()]+last.date.getDay()
+              lastMsgTime = monthNames[last.date.getMonth()]+last.date.getDate()
             }
           }
         }
@@ -82,7 +82,7 @@ class ChatGroup extends Component {
                     <tbody>
                       <tr className='headln'>
                         <td rowSpan={'2'}>
-                          <p className="card-title groupname">{this.state.name}</p>
+                          <p className="card-title groupname text-truncate">{this.state.name}</p>
                         </td>
                         <td colSpan={'2'}>
                           <p className='lastMsgTime'>{lastMsgTime}</p>

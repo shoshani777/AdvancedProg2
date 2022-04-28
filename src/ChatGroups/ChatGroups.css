@@ -50,6 +50,7 @@
 }
 .groupname{
     padding-inline-start: 8%;
+    width: 218px;
 }
 .unreadTd{
     width: 36px;

@@ -402,5 +402,5 @@ FodyWeavers.xsd
 node_modules/
 
 # manually added, ignoring all react
-public/whatsappIcon.ico
+public/
 src/

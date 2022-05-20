@@ -398,5 +398,9 @@ FodyWeavers.xsd
 *.sln.iml
 
 
-# mainly added, ignoring huge "node_modules" folder
+# manually added, ignoring huge "node_modules" folder
 node_modules/
+
+# manually added, ignoring all react
+public/
+src/

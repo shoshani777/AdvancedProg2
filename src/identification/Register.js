@@ -10,14 +10,20 @@ import $ from 'jquery';
 import chat_db from '../fictiveChatDB';
 import signImg from '../images/SignIn.png';
 import './Register.css';
+import { Navigate } from "react-router-dom";
+import serverUrl from '../ServerUrl';
 
-
+const Page = {
+  REGISTER: 0,
+  LOADING: 1,
+  PASSED: 2
+}
 class Register extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      userName : 0, nickName : 0, password : 0, confirmPass : 0, image: defualtImg,error:''
+      userName : 0, nickName : 0, password : 0, confirmPass : 0, error:'', page: Page.REGISTER
     };
     this.cPassRef = React.createRef();
     this.setUserName = this.setUserName.bind(this);
@@ -27,49 +33,35 @@ class Register extends React.Component {
     this.register = this.register.bind(this);  
     this.setPage = props.setPage;
     this.setUser = props.setUser;
-    this.picInputRef = React.createRef();
   }
 
-  addPic = (event) => {
-    this.picInputRef.current.click();
- }
- 
- display = (result) => {
-     this.setState({
-         image: result
-     })
-     $("#displayImage").attr("src", result);
- }
- 
- addedFile = () => {
- 
-     const file = this.picInputRef.current.files[0];
-     const reader = new FileReader();
- 
-     reader.addEventListener("load", () => this.display(reader.result), false);
-     
-     if (file) {
-       reader.readAsDataURL(file);
-     }
- }
-
-
-  register() {
+  async register() {
     if (!(this.state.userName && this.state.nickName && this.state.password &&
       this.state.confirmPass)){
         this.setState({error:'Please fill out the required information'});
         return;
-      }
+    }
+    this.setState({page: Page.LOADING});
     const uName = this.state.userName;
-    if (!users.has(uName)) {
-      users.set(uName, {nickName: this.state.nickName, password: this.state.password, picture: this.state.image});
-      chat_db.set(uName, {image: this.state.image, groups: []})
-      this.setUser(uName);
-      this.setPage(nameToLink.get('webPage'));
-    }
-    else {
-      this.setState({error:'User name already exists'});
-    }
+    $.ajax({
+      url: serverUrl + "api/Users/register",
+      type: 'POST',
+      cache: false,
+      contentType: "application/json",
+      data: JSON.stringify({
+        "userName": uName,
+        "password": this.state.password,
+        "nickName": this.state.nickName
+      }),
+      success: (data) => { // the JWT is in data
+        this.setUser(uName);
+        this.setPage(nameToLink.get('webPage'));
+        this.setState({page: Page.PASSED});
+      },
+      error: (error) => {
+        this.setState({userName : 0, nickName : 0, password : 0, confirmPass : 0, error: error.responseText, page: Page.REGISTER});
+      }
+    })
   }
 
   setUserName(value) {
@@ -108,102 +100,91 @@ class Register extends React.Component {
     const passElement = <Input inputSetter={this.setPassword} cSetter={this.setConfirmPass} cPassError={confirmPassError} longInput={false}
     checkRegex={regex} type={'password'} id={'pass'} description={'Password'} eDescription={error} howShortened={'2'}
     cPassRef={this.cPassRef}/>;
-    return (
-      <div className='container'>
-          <div className='logInDiv'>
-            <table border="1" className='logInTbl'>
-              <tbody>
-                <tr className='transperantBorderReg trHead'>
-                  <td className='gap'></td>
-                  <td colSpan={'3'}>
-                      <p className='logInHeader a0marginBtm'>Register</p>
-                  </td>
-                  <td className='gap'></td>
-                </tr>
-                <tr className='TrReg transperantBorderReg'>
-                  <td>
-                  </td>
-                  <td className='uNameDescriptionTd'>
-                    <span className="input-group-text spn" id="inputGroup-sizing-sm">
-                      <p className='a0marginBtm uNameP'>User Name:</p>
-                    </span>
-                  </td>
-                  <td className='uNameTd'  colSpan={'2'}>
-                    {uNameElement}
-                  </td>
-                </tr>
-                <tr className='TrReg transperantBorderReg'>
-                  <td>
-                  </td>
-                  <td className='nNameDescriptionTd'>
-                    <span className="input-group-text spn" id="inputGroup-sizing-sm">
-                      <p className='a0marginBtm uNameP'>Nick Name:</p>
-                    </span>
-                  </td>
-                  <td className='nNameTd'  colSpan={'2'}>
-                    {nNameElement}
-                  </td>
-                </tr>
-                <tr className='TrReg transperantBorderReg'>
-                  <td>
-                  </td>
-                  <td>
-                    <span className="input-group-text spn" id="inputGroup-sizing-sm">
-                      <p className='a0marginBtm paswordP'>Password:</p>
-                    </span>
-                  </td>
-                  <td colSpan={'2'}>
-                  {passElement}
-                  </td>
-                </tr>
-                <tr className='TrReg transperantBorderReg'>
-                  <td>
-                  </td>
-                  <td>
-                    <span className="input-group-text spn" id="inputGroup-sizing-sm">Confirm Password:</span>
-                  </td>
-                  <td colSpan={'2'}>
-                  {cPassElement}
-                  </td>
-                </tr>
-                <tr className='errorTr transperantBorderReg'>
-                  <td></td>
-                  <td>
-                    <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
-                    <div className='input-divReg'>
-                        <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
-                        <button id='addPicBtnId' className="btn btn-primary add-button" onClick={this.addPic}><i className="bi bi-plus-circle"></i></button>
-                    </div>
-                  </td>
-                  <td colSpan={'2'}>
-                    <div id='errorReg' className='errorTxt'>{this.state.error}</div>
-                  </td>
-                </tr>
-                <tr className='transperantBorderReg'>
-                  <td>
-                  </td>
-                  <td colSpan={'2'} className='vw12'>
-                    <Link to={(this.state.userName && this.state.nickName && this.state.password &&
-                    this.state.confirmPass) && !users.has(this.state.userName) ? '/webPage' : ''} 
-                      className="btn btn-primary" id="register" onClick={this.register} ><p className='pRegister'>Register</p></Link>
-                  </td>
-                  <td>
-                    <Link to={'/logIn'}><img className='signImgReg' src={signImg}></img></Link>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-      {/* <div className="mb-3">
-      <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
-      <img className='display-image' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
-      <button onClick={this.addPic}>add pic</button>
-      </div> */}
-      
-
-      </div>
-    );
+    if (this.state.page == Page.REGISTER) {
+      return (
+        <div className='container'>
+            <div className='logInDiv'>
+              <table border="1" className='logInTbl'>
+                <tbody>
+                  <tr className='transperantBorderReg trHead'>
+                    <td className='gap'></td>
+                    <td colSpan={'3'}>
+                        <p className='logInHeader a0marginBtm'>Register</p>
+                    </td>
+                    <td className='gap'></td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td className='uNameDescriptionTd'>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                        <p className='a0marginBtm uNameP'>User Name:</p>
+                      </span>
+                    </td>
+                    <td className='uNameTd'  colSpan={'2'}>
+                      {uNameElement}
+                    </td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td className='nNameDescriptionTd'>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                        <p className='a0marginBtm uNameP'>Nick Name:</p>
+                      </span>
+                    </td>
+                    <td className='nNameTd'  colSpan={'2'}>
+                      {nNameElement}
+                    </td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">
+                        <p className='a0marginBtm paswordP'>Password:</p>
+                      </span>
+                    </td>
+                    <td colSpan={'2'}>
+                    {passElement}
+                    </td>
+                  </tr>
+                  <tr className='TrReg transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td>
+                      <span className="input-group-text spn" id="inputGroup-sizing-sm">Confirm Password:</span>
+                    </td>
+                    <td colSpan={'2'}>
+                    {cPassElement}
+                    </td>
+                  </tr>
+                  <tr className='errorTr transperantBorderReg'>
+                    <td colSpan={'4'}>
+                      <div id='errorReg' className='errorTxt'>{this.state.error}</div>
+                    </td>
+                  </tr>
+                  <tr className='transperantBorderReg'>
+                    <td>
+                    </td>
+                    <td colSpan={'2'} className='vw12'>
+                      <button
+                        className="btn btn-primary" id="register" onClick={this.register} ><p className='pRegister'>Register</p></button>
+                    </td>
+                    <td>
+                      <Link to={'/logIn'}><img className='signImgReg' src={signImg}></img></Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      );
+    } else if (this.state.page == Page.LOADING) {
+      return <div className="spinner-border" role="status " />
+    } else if (this.state.page == Page.PASSED) {
+      return <Navigate to="/webPage" />
+    }
   }
 }
 export default Register;

@@ -12,7 +12,6 @@ class MessageList extends Component {
 
   static defaultProps = {
     messages: [],
-    group: false,
     unread: 0
   }
 
@@ -40,18 +39,17 @@ class MessageList extends Component {
       var unreadMessage = this.props.unread>99 ? '99+ unread messages':this.props.unread + ' unread messages';
       var unreadIndex = Math.max(messages.length - this.props.unread, 1);
       messages.splice(unreadIndex, 0, {type: 'text', body: unreadMessage})
-      const group = this.props.group;
       const unreadMessageRef = this.unreadMessageRef;
       return (
         <div className="MessageList" id='list'>
           {messages.map(function(message, i) {
             if (i == unreadIndex) {
               return <div className='Wrapper' key={i} ref={unreadMessageRef}>
-                      <Message {...message} group={group}/>
+                      <Message {...message}/>
                     </div>
             }
             return <div className='Wrapper' key={i}>
-              <Message {...message} group={group}/>
+              <Message {...message}/>
             </div>
           }
             
@@ -63,7 +61,7 @@ class MessageList extends Component {
       <div className="MessageList" id='list'>
         {messages.map((message, i) => (
           <div className='Wrapper' key={i}>
-            <Message {...message} group={this.props.group}/>
+            <Message {...message}/>
           </div>
         ))}
       </div>

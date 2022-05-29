@@ -14,7 +14,7 @@ class WebPage extends Component {
       window.location.href = "/logIn";
     }
     this.state = {
-      ...chat_db.get(props.userName),clickedId:null,userName:props.userName,unreadOnTop:false
+      ...chat_db.get("gilad517"),clickedId:null,userName:"gilad517",unreadOnTop:false
     }
     this.ChangeStateFunc = this.ChangeState.bind(this);
     this.checkGroupNameFunc = this.checkGroupName.bind(this);

@@ -82,7 +82,6 @@ class Login extends React.Component {
     if (this.state.page == Page.LOGIN) {
       return (
         <div className='logInDiv'>
-          <form>
             <table border="1" className='logInTbl'>
               <tbody>
                 <tr className='transperantBorder'>
@@ -129,7 +128,6 @@ class Login extends React.Component {
                 </tr>
               </tbody>
             </table>
-          </form>
         </div>
       );
     } else if (this.state.page == Page.LOADING) {

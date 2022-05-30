@@ -6,6 +6,8 @@ import './bootstrap/dist/css/bootstrap.min.css';
 import NewContact from "./ChatGroups/NewContact";
 import "./WebPage.css";
 import DefualtChat from "./DefualtChat";
+import * as signalR from '@microsoft/signalr';
+import serverUrl from "./ServerUrl";
 
 class WebPage extends Component {
   constructor(props) {
@@ -25,6 +27,41 @@ class WebPage extends Component {
       }
       element.isClicked = false;
     }
+    this.connection = new signalR.HubConnectionBuilder()
+      .withUrl(serverUrl + "hubs/chat", {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      })
+      .withAutomaticReconnect()
+      .build();
+      this.connection.start()
+            .then(() => {
+                this.connection.on('ReceiveMessage', (message, userFor) => {
+                  if (message.Author == this.props.userName) {
+                    this.forceUpdate();
+                  }
+                  if (userFor != this.props.userName) {
+                    return;
+                  }
+                  this.state.groups.forEach(group => {
+                    if (group.id == message.Author) {
+                      if (!group.isClicked) {
+                        group.unreadMark = group.unreadMark + 1;
+                      }
+
+                      var changedGroup = null;
+                  
+                      if (this.props.unread === 0) {
+                        changedGroup = {messages:[...group.messages,message]}
+                      } else {
+                        changedGroup = {messages:[...group.messages,message], unread: group.unread + 1}
+                      }
+                      this.ChangeStateFunc({groupIdToChange:group.id,newGroup: changedGroup,groupIdToTop:group.id})
+                    }
+                  });
+                });
+            })
+            .catch(e => console.log('Connection failed: ', e));
   }
 
   checkGroupName({nameToCheck}){

@@ -29,21 +29,26 @@
   border-left: 1rem solid transparent;
 }
   
-  .Message.log {
-    margin: auto;
-    text-align: center;
-    background-color: yellow;
-    width: 30%;
-  }
-  
-  .Message.me {
-    background-color: lightblue;
-  }
+.Message.log {
+  margin: auto;
+  text-align: center;
+  background-color: yellow;
+  width: 30%;
+}
 
-  .Message.other {
-    margin-left: auto; 
-    margin-right: 0;
-    background-color: lightgreen;
-  }
+.Message.me {
+  background-color: lightblue;
+}
+
+.Message.other {
+  margin-left: auto; 
+  margin-right: 0;
+  background-color: lightgreen;
+}
+
+.statusCs{
+  text-align: end;
+  
+}
 
   

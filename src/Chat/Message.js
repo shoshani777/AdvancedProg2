@@ -21,52 +21,35 @@ class Message extends Component {
     if (this.props.Author) {
       messageClass += this.props.me? ' me' : ' other';
     }
-    var status = this.props.me? this.props.sentStatus: null;
-    // var color;
-    // if (peopleToColor.has(this.props.author)) {
-    //   color = peopleToColor.get(this.props.author);
-    // }
-    // else {
-    //   color = this.randomColor();
-    //   peopleToColor.set(this.props.author, color);
-    // }
-    // const authorDisplay = !this.props.me && this.props.group && this.props.author && (
-    //   <div className="author" style={{color:'#' + color}}>{this.props.author}</div>
-    // )
+    var loading = <i class="bi bi-clock"></i>
+    var check = <i class="bi bi-check2"></i>
+    var checkAll = <i class="bi bi-check2-all"></i>
+    var status = null;
+    if(this.props.me){
+      if(typeof this.props.sentStatus ==='undefined')
+      {
+        status = checkAll;
+      }
+      if(this.props.sentStatus==='loading')
+      {
+        status = loading;
+      } else if(this.props.sentStatus==='sent')
+      {
+        status = check;
+      } else if(this.props.sentStatus==='recieved')
+      {
+        status = checkAll;
+      }
+    }
     return (
       <div className={messageClass}>
         {this.props.icon}
         {this.props.Content}
-        <div>
+        <div className='statusCs'>
           {status}
         </div>
       </div>
     )
-    // if (this.props.type === 'text') {
-    //   return (
-    //     <div className={messageClass}>
-    //       {this.props.icon}
-    //       {authorDisplay}
-    //       {this.props.body}
-    //     </div>
-    //   )
-    // } else if (this.props.type === 'img') { // assume the body is the src
-    //     return (
-    //       <div className={messageClass}>
-    //         {authorDisplay}
-    //         <img src={this.props.body} alt="couldn't load" width="100" height="80" />
-    //       </div>
-    //     )
-    // } else if (this.props.type === 'audio') {
-    //     return (
-    //       <div className={messageClass}>
-    //         {authorDisplay}
-    //         <audio controls>
-    //           <source src={this.props.body} type="audio/mpeg" />
-    //         </audio>
-    //       </div>
-    //     )
-    // }
   }
 }
 

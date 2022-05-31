@@ -12,7 +12,6 @@ class MessageList extends Component {
 
   static defaultProps = {
     messages: [],
-    group: false,
     unread: 0
   }
 
@@ -35,23 +34,24 @@ class MessageList extends Component {
   render() {
     const messages = this.props.messages.slice();
     const endToEndEnc = " end to end encryption";
-    messages.splice(0, 0, {type: 'text', body: endToEndEnc, icon: <i className="bi bi-lock-fill"></i>})
+    // messages.splice(0, 0, {type: 'text', body: endToEndEnc, icon: <i className="bi bi-lock-fill"></i>})
+    messages.splice(0, 0, {Content: endToEndEnc, icon: <i className="bi bi-lock-fill"></i>})
     if (this.props.unread > 0) {
       var unreadMessage = this.props.unread>99 ? '99+ unread messages':this.props.unread + ' unread messages';
       var unreadIndex = Math.max(messages.length - this.props.unread, 1);
-      messages.splice(unreadIndex, 0, {type: 'text', body: unreadMessage})
-      const group = this.props.group;
+      // messages.splice(unreadIndex, 0, {type: 'text', body: unreadMessage})
+      messages.splice(unreadIndex, 0, { Content: unreadMessage})
       const unreadMessageRef = this.unreadMessageRef;
       return (
         <div className="MessageList" id='list'>
           {messages.map(function(message, i) {
             if (i == unreadIndex) {
               return <div className='Wrapper' key={i} ref={unreadMessageRef}>
-                      <Message {...message} group={group}/>
+                      <Message {...message} me={(this.props.userName===message.Author)}/>
                     </div>
             }
             return <div className='Wrapper' key={i}>
-              <Message {...message} group={group}/>
+              <Message {...message}  me={(this.props.userName===message.Author)}/>
             </div>
           }
             
@@ -63,7 +63,7 @@ class MessageList extends Component {
       <div className="MessageList" id='list'>
         {messages.map((message, i) => (
           <div className='Wrapper' key={i}>
-            <Message {...message} group={this.props.group}/>
+            <Message {...message}  me={(this.props.userName===message.Author)}/>
           </div>
         ))}
       </div>

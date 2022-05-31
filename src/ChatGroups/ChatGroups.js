@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../bootstrap/dist/css/bootstrap.min.css';
 import "./ChatGroups.css";
+import defualtGroupImg from "../images/DefualtGroup.jpg";
 
 class ChatGroup extends Component {
     constructor(props) {  
@@ -25,8 +26,8 @@ class ChatGroup extends Component {
       var lastmsg = "",lastmsgIcon=<></>;
       if(this.state.messages.length > 0){
         var last = this.state.messages[this.state.messages.length-1]
-        if(!last.me){
-          lastmsg+=last.author+": "
+        if(last.Author!==this.props.userName){
+          lastmsg+=last.Author+": "
         }
         if(last.type==="img"){
           lastmsg+="image"
@@ -34,12 +35,12 @@ class ChatGroup extends Component {
         } else if(last.type==="audio"){
           lastmsg+="recording"
           lastmsgIcon=<i className="bi bi-soundwave icn"></i>
-        } else if(last.type==="text"){
-          lastmsg+=last.body
+        } else{
+          lastmsg+=last.Content
         }
-        var lastDate = new Date(last.date),now=new Date();
+        var lastDate = new Date(last.Created),now=new Date();
         var lastMsgTime = '';
-        if(typeof last.date !== 'undefined'){
+        if(typeof last.Created !== 'undefined'){
           if(lastDate.toLocaleDateString()===now.toLocaleDateString()){
             //today
             var hours = lastDate.getHours()<10?"0"+lastDate.getHours():lastDate.getHours();
@@ -55,7 +56,7 @@ class ChatGroup extends Component {
             }
             else{
               const monthNames = ["Jan. ", "Feb. ", "Mar. ", "Apr. ", "May. ", "Jun. ","Jul. ", "Aug. ", "Sep. ", "Oct. ", "Nov. r", "Dec. "];
-              lastMsgTime = monthNames[last.date.getMonth()]+last.date.getDate()
+              lastMsgTime = monthNames[lastDate.getMonth()]+lastDate.getDate()
             }
           }
         }
@@ -68,6 +69,12 @@ class ChatGroup extends Component {
           unreadMsg = <div className='unreadDiv'><p>99+</p></div>
         }
       }
+      var img;
+      if(typeof this.state.image !== 'undefined'){
+        img = <img className='img' src={this.state.image} alt="db error"></img>
+      }else{
+        img = <img className='img' src={defualtGroupImg} alt="db error"></img>
+      }
       const linkClass = this.state.isClicked?"card group clickedgroup":"card group";
       return (
         <a className={linkClass} onClick={this.handleClick}>
@@ -75,7 +82,7 @@ class ChatGroup extends Component {
             <tbody>
               <tr>
                 <td className='imgTd'>
-                <img className='img' src={this.state.image} alt="db error"></img>
+                {img}
                 </td>
                 <td className='textTd'>
                   <table border = "0" className='smalltbl'>

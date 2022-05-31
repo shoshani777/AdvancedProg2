@@ -86,23 +86,25 @@ class Input extends React.Component{
         this.setState({
             inputClass : "is-invalid",
             error : this.eDescription
-
-          })
+        })
     }
     
 
     render() {
         
         //const errorLabal = document.getElementById(id + 'error');
-        //const inputElement = document.getElementById(id);
+        //const inputElement = document.getElementById(id); placeholder={placeholder}
         var shortenedNum=this.props.howShortened;
         var max = this.props.longInput?'25':'16';
-
+        var input = typeof this.props.placeholder==='undefined'?<input data-lpignore="true" ref={this.input} id={this.id} onKeyUp={this.validate} type={this.type} 
+        className={"form-control inputCls " + this.state.inputClass} onBlur={this.validate} maxLength={max}></input>
+        :
+        <input data-lpignore="true" ref={this.input} id={this.id} onKeyUp={this.validate} type={this.type} 
+            className={"form-control inputCls " + this.state.inputClass} onBlur={this.validate} maxLength={max} placeholder={this.props.placeholder}></input>
         return (
         <div className="a0marginBtm bigDiv">
             <div className={'inputDiv'+shortenedNum}>
-            <input data-lpignore="true" ref={this.input} id={this.id} onKeyUp={this.validate} type={this.type} 
-            className={"form-control inputCls " + this.state.inputClass} onBlur={this.validate} maxLength={max}></input>
+            {input}
             </div>
             <div id={this.id + 'error'} htmlFor={this.id} className={"text-danger err"+shortenedNum}>{this.state.error}</div>
         </div>

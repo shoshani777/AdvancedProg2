@@ -12,6 +12,7 @@ import signImg from '../images/SignIn.png';
 import './Register.css';
 import { Navigate } from "react-router-dom";
 import serverUrl from '../ServerUrl';
+import JWT from './Jwt';
 
 const Page = {
   REGISTER: 0,
@@ -54,6 +55,7 @@ class Register extends React.Component {
         "nickName": this.state.nickName
       }),
       success: (data) => { // the JWT is in data
+        JWT.JWT = data;
         this.setUser(uName);
         this.setPage(nameToLink.get('webPage'));
         this.setState({page: Page.PASSED});
@@ -101,7 +103,7 @@ class Register extends React.Component {
     checkRegex={regex} type={'password'} id={'pass'} description={'Password'} eDescription={error} howShortened={'2'}
     cPassRef={this.cPassRef}/>;
     if (this.state.page == Page.REGISTER) {
-      return (
+      return ( 
         <div className='container'>
             <div className='logInDiv'>
               <table border="1" className='logInTbl'>

@@ -11,6 +11,7 @@ import { Navigate } from "react-router-dom";
 import './Login.css';
 import serverUrl from '../ServerUrl';
 import $ from 'jquery';
+import JWT from './Jwt';
 
 const Page = {
   LOGIN: 0,
@@ -47,8 +48,11 @@ class Login extends React.Component {
         "userName": uName,
         "password": this.state.password,
         "nickName": "string"
-      }),
+      }), 
       success: (data) => { // the JWT is in data
+        console.log("JWT")
+        console.log(JWT)
+        JWT.JWT = data;
         this.setUser(uName);
         this.setPage(nameToLink.get('webPage'));
         this.setState({page: Page.PASSED});
@@ -82,7 +86,6 @@ class Login extends React.Component {
     if (this.state.page == Page.LOGIN) {
       return (
         <div className='logInDiv'>
-          <form>
             <table border="1" className='logInTbl'>
               <tbody>
                 <tr className='transperantBorder'>
@@ -129,7 +132,6 @@ class Login extends React.Component {
                 </tr>
               </tbody>
             </table>
-          </form>
         </div>
       );
     } else if (this.state.page == Page.LOADING) {

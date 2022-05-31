@@ -1,87 +1,141 @@
 import React, { Component } from 'react';
 import '../bootstrap/dist/css/bootstrap.min.css';
 import "./NewContact.css";
-import defualtImg from "../images/defualtChat.jpg";
+import defualtImg from "../images/DefualtGroup.jpg";
 import Input from '../identification/Input';
 import $ from 'jquery';
+import serverUrl from "../ServerUrl";
+import JWT from '../identification/Jwt';
 
 class NewContact extends Component {
     constructor(props) {
       super(props);
       this.state={
-        name:'',error:''
+        contactName:'',chatName:'',contactServer:'',error:'',image:defualtImg
       }
       this.addFunc = props.AddingFunc;
       this.setChatNameFunc = this.setChatName.bind(this);
+      this.setContactNameFunc = this.setContactName.bind(this);
+      this.setContactServerFunc = this.setContactServer.bind(this);
       this.checkGroupNameFunc = props.checkGroupName;
-      this.inputRef = React.createRef();
-      this.picInputRef = React.createRef();
+      this.checkContactName = props.checkContactName;
+      this.inputRef1 = React.createRef();
+      this.inputRef2 = React.createRef();
+      this.inputRef3 = React.createRef();
     }
 
     resetNameFunc=()=>{
-        $("#displayImage").attr("src", defualtImg);
         this.setState({
-            Image: defualtImg
+            Image: defualtImg,error:''
         });
         this.setChatNameFunc("");
-        this.inputRef.current.setState({
+        this.setContactName("");
+        this.setContactServer("");
+        this.inputRef1.current.setState({
+            inputClass: '',
+            error: ''
+        });
+        this.inputRef2.current.setState({
+            inputClass: '',
+            error: ''
+        });
+        this.inputRef3.current.setState({
             inputClass: '',
             error: ''
         })
         $("#ChatNameId").val('');
+        $("#ContactNameId").val('');
+        $("#ContactServerId").val('');
         
     }
     setChatName(value) {
         this.setState({
-            name: value
+            chatName: value
         })
     }
-    handleClickFunc=()=>{
-        const input = document.getElementById('ChatNameId')
-        if(this.state.name===''){
-            this.setState({error: "Please enter a group name"});
+    setContactName(value) {
+        this.setState({
+            contactName: value
+        })
+    }
+    setContactServer(value) {
+        this.setState({
+            contactServer: value
+        })
+    }
+    handleClickFunc=async ()=>{
+        const input1 = document.getElementById('ChatNameId')
+        const input2 = document.getElementById('ContactNameId')
+        const input3 = document.getElementById('ContactServerId')
+        if(this.state.chatName===''||this.state.contactName===''||this.state.contactServer===''){
+            this.setState({error: "Please enter a chat name, user name, and server"});
             return;
         }
-        if(!this.checkGroupNameFunc({nameToCheck:this.state.name})){
+        if(this.state.chatName===null||this.state.contactName===null||this.state.contactServer===null){
+            this.setState({error: "Please enter a chat name, user name, and server"});
+            return;
+        }
+        if(!this.checkGroupNameFunc({nameToCheck:this.state.chatName})){
             this.setState({error: "Group name already taken"});
             return;
         }
-        if(input.classList.contains("is-valid"))
-        {
-            this.setState({error: ""});
-            this.addFunc({newGroup:{id:0 , isClicked: false, name:this.state.name , image:$("#displayImage").attr("src") ,isgroup:false, unreadMark: 0, unread: 0, messages:[]}})
-            $("[data-dismiss=modal]").trigger({ type: "click" });
+        if(!this.checkContactName({nameToCheck:this.state.contactName})){
+            this.setState({error: "Already has a chat with this contact"});
+            return;
+        }
+        if(input1.classList.contains("is-valid")&&input2.classList.contains("is-valid")&&input3.classList.contains("is-valid")){
+                this.setState({error: ""});
+                $.ajax({
+                    url: serverUrl + "api/contacts/",
+                    type: 'POST',
+                    cache: false,
+                    contentType: "application/json",
+                    beforeSend: (xhr)=>{
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + JWT.JWT);
+                    },
+                    data: JSON.stringify({
+                      "id": this.state.contactName,
+                      "name": this.state.chatName,
+                      "server": this.state.contactServer
+                    }),
+                    success: async () => {
+                      $.ajax({
+                        url: this.state.contactServer + "api/contacts/invitations",
+                        type: 'POST',
+                        cache: false,
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                          "from": this.props.userName,
+                          "to": this.state.contactName,
+                          "server": serverUrl
+                        }),
+                        success:async ()=>{
+                            this.addFunc({newGroup:{id: this.state.contactName, isClicked: false, name:this.state.chatName,
+                                      unreadMark: 0, unread: 0, messages:[],last:null,lastdate:new Date(),server:this.state.contactServer}})
+                            $("[data-dismiss=modal]").trigger({ type: "click" });
+                        }
+                      })
+                    }
+                  })
+
+
         }
     }
-
-    addPic = () => {
-       this.picInputRef.current.click();
-    }
     
-    display = (result) => {
-        $("#displayImage").attr("src", result);
-    }
     
     resetErr=()=>{
         this.setState({error:''})
-    }
-
-    addedFile = () => {
-        const file = this.picInputRef.current.files[0];
-        const reader = new FileReader();
-    
-        reader.addEventListener("load", () => this.display(reader.result), false);
-        
-        if (file) {
-          reader.readAsDataURL(file);
-        }
     }
 
     render() {
         const regex = '^[a-zA-Z]';
         const error = 'must begin with a letter';
         const ChatNameElement = <Input inputSetter={this.setChatNameFunc} checkRegex={regex} type={'text'} howShortened={'3'} longInput={true} 
-        id={'ChatNameId'} description={'Chat Name'} ref={this.inputRef} eDescription={error}/>;
+        id={'ChatNameId'} description={'Chat Name'} ref={this.inputRef1} eDescription={error} placeholder={'Chat Name'}/>;
+        const ContactNameElement = <Input inputSetter={this.setContactNameFunc} checkRegex={regex} type={'text'} howShortened={'3'} longInput={true} 
+        id={'ContactNameId'} description={'Contact Name'} ref={this.inputRef2} eDescription={error} placeholder={'User Name'}/>;
+        const ContactServerElement = <Input inputSetter={this.setContactServerFunc} checkRegex={regex} type={'text'} howShortened={'3'} longInput={true} 
+        id={'ContactServerId'} description={'Contact Server Name'} ref={this.inputRef3} eDescription={error} placeholder={'Server'}/>;
         return (
           <>
             <a type="button" href='#' className="btn addChat" data-toggle="modal" data-target="#CenteralModal" onClick={this.resetNameFunc}>
@@ -102,13 +156,9 @@ class NewContact extends Component {
                 </div>
                 <div className="modal-body">
                     {ChatNameElement}
-                    <input type="file" accept="image/*" ref={this.picInputRef} onChange={this.addedFile} hidden/>
-                    <div className='input-div'>
-                        <img className='chatImg' id='displayImage' src={defualtImg} alt="couldn't load" width="50" height="40" />
-                        <button className="btn btn-primary add-button" onClick={this.addPic}><i className="bi bi-plus-circle"></i></button>
-                    </div>
+                    {ContactNameElement}
+                    {ContactServerElement}
                     <div className='errorTxt errorTxtDivAtModal'>{this.state.error}</div>
-
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.resetErr}>Close</button>

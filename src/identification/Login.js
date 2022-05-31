@@ -50,8 +50,6 @@ class Login extends React.Component {
         "nickName": "string"
       }), 
       success: (data) => { // the JWT is in data
-        console.log("JWT")
-        console.log(JWT)
         JWT.JWT = data;
         this.setUser(uName);
         this.setPage(nameToLink.get('webPage'));

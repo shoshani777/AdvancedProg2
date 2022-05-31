@@ -53,28 +53,21 @@ class WebPage extends Component {
       this.connection.start()
             .then(() => {
                 this.connection.on('ReceiveMessage', (message, userFor) => {
-                  console.log("got:")
-                  console.log(message)
-                  console.log(userFor)
                   if(message!==null)
                   {
                     var actualMessage = {Id:message.id,Author:message.author,Content:message.content,Created:message.created,Chat:message.chat}
                   }
-                  console.log("got here")
-                  if (userFor != this.props.userName) {
-                    console.log("got here2")
+                  if (userFor !== this.props.userName) {
                     return;
                   }
-                  console.log("passed first if")
                   if(message===null)
                   {
-                    console.log("got null");
                     this.getData();
                     return;
                   }
                   for(let index = 0; index < this.state.groups.length; index++){
                     var group = this.state.groups[index]
-                    if (group.id == actualMessage.Author) {
+                    if (group.id === actualMessage.Author) {
                       if (!group.isClicked) {
                         group.unreadMark = group.unreadMark + 1;
                       }
@@ -95,7 +88,6 @@ class WebPage extends Component {
   }
 
   async getData(){
-    console.log("in get data")
     $.ajax({
       url: serverUrl+"api/flows",
       type: 'GET',
@@ -196,8 +188,6 @@ class WebPage extends Component {
     } else if(typeof newGroup !== 'undefined'){
       newState.groups.unshift(newGroup);
       newState.clickedId = newGroup.id;
-      // console.log("newState:")
-      // console.log(newState)
       for (let index = 0; index < newState.groups.length; index++) {
         const element = newState.groups[index];
         if(element.isClicked){
@@ -229,7 +219,6 @@ class WebPage extends Component {
   }
 
   render() {
-    console.log(this.state)
     if(this.state.groups==null){return (<></>);}
     var list =[]
     for (let index = 0; index < this.state.groups.length; index++) {
